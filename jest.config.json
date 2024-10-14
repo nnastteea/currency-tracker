@@ -1,0 +1,17 @@
+{
+  "transform": {
+    "^.+\\.tsx?$": "babel-jest",
+    "^.+\\.jsx?$": "babel-jest"
+  },
+  "testEnvironment": "jest-environment-jsdom",
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+  "moduleNameMapper": {
+    "\\.(css|less|scss)$": "identity-obj-proxy",
+    "\\.(svg)$": "<rootDir>/src/_mocks_/fileMock.js",
+    "^@interfaces/(.*)$": "<rootDir>/src/interfaces/$1",
+    "^@components/(.*)$": "<rootDir>/src/components/$1",
+    "^@routes/(.*)$": "<rootDir>/src/routes/$1",
+    "^@theme/(.*)$": "<rootDir>/src/themes/$1"
+  }
+}

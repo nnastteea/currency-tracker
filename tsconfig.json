@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // Версия JavaScript, в которую будет транслироваться TypeScript
+    "module": "ESNext", // Система модулей для ES-модулей
+    "moduleResolution": "node", // Устанавливаем разрешение модулей на 'node'
+    "strict": true, // Включает все строгие проверки типов
+    "jsx": "react", // Настройка для обработки JSX
+    "esModuleInterop": true, // Совместимость с ES-модулями
+    "skipLibCheck": true, // Пропускает проверку типов в файлах библиотек
+    "forceConsistentCasingInFileNames": true, // Требует одинакового регистра в именах файлов
+    "outDir": "./dist", // Директория для выходных файлов
+    "rootDir": "./src", // Корневая директория исходных файлов
+    "resolveJsonModule": true, // Позволяет импортировать файлы JSON
+    "isolatedModules": true,
+    "baseUrl": "./src"
+  },
+  "include": ["src/**/*"], // Включает все файлы в директории src и ее поддиректориях
+  "exclude": ["node_modules"] // Исключает файлы в node_modules и файлы тестов
+}

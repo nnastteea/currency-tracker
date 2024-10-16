@@ -11,6 +11,9 @@ const config: Configuration = {
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
+    alias: {
+      "@assets": path.resolve("./src/assets"),
+    },
   },
   module: {
     rules: [
@@ -37,12 +40,7 @@ const config: Configuration = {
       },
       {
         test: /\.svg$/,
-        use: [
-          {
-            loader: "@svgr/webpack",
-          },
-          "file-loader",
-        ],
+        use: "file-loader",
       },
       {
         test: /\.png$/,

@@ -12,24 +12,24 @@ export const SwitchInput = styled.input`
 `;
 
 export const SwitchSlider = styled.span`
-  width: 50px;
-  height: 25px;
+  width: ${({ theme }) => theme.sizes.xl}px;
+  height: ${({ theme }) => theme.sizes.xs3}px;
   background-color: transparent;
-  border: 2px solid white;
-  border-radius: 25px;
+  border: 2px solid ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.sizes.xs3}px;
   position: relative;
   transition: background-color 0.4s;
 
   &::before {
     content: "";
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: ${({ theme }) => theme.sizes.xs4}px;
+    height: ${({ theme }) => theme.sizes.xs4}px;
     background-color: transparent;
-    border: 2px solid white;
-    border-radius: 25px;
-    top: 1px;
-    left: 3px;
+    border: 2px solid ${({ theme }) => theme.colors.white};
+    border-radius: ${({ theme }) => theme.sizes.xs3}px;
+    top: ${({ theme }) => theme.sizes.xs10}px;
+    left: ${({ theme }) => theme.sizes.xs8}px;
     transition: transform 0.2s;
   }
 
@@ -39,13 +39,13 @@ export const SwitchSlider = styled.span`
     }
   }
 
-  @media (max-width: 860px) {
-    width: 40px;
-    height: 20px;
+  @media (max-width: ${({ theme }) => theme.sizes.xl10}px) {
+    width: ${({ theme }) => theme.sizes.s}px;
+    height: ${({ theme }) => theme.sizes.xs4}px;
 
     &::before {
-      width: 15px;
-      height: 15px;
+      width: ${({ theme }) => theme.sizes.xs5}px;
+      height: ${({ theme }) => theme.sizes.xs5}px;
     }
 
     ${SwitchInput}:checked + & {

@@ -1,19 +1,21 @@
 import { createGlobalStyle, styled } from "styled-components";
 
+const NULL_P_M = 0;
+
 export const GlobalStyle = createGlobalStyle`
 body{
-    margin:0;
-    padding:0;
+    margin:${NULL_P_M};
+    padding:${NULL_P_M};
     font-family: "Poppins", sans-serif;
-    background:black;
+    background:${({ theme }) => theme.colors.black};
 }
 #root{
-    margin:0;
-    padding:0;
+    margin:${NULL_P_M};
+    padding:${NULL_P_M};
 }
 
 &::-webkit-scrollbar {
-    width: 4px;
+    width: ${({ theme }) => theme.sizes.xs7}px;
   }
 
   &::-webkit-scrollbar-track {
@@ -21,7 +23,7 @@ body{
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #474747; 
-    border-radius: 4px; 
+    background: ${({ theme }) => theme.colors.gray}; 
+    border-radius: ${({ theme }) => theme.sizes.xs7}px; 
   }
 `;

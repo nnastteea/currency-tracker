@@ -51,3 +51,30 @@ export const quotes = [
   { id: 10, title: "Bitcoin", value: "R$ 122148.71", image: Bitcoin },
   { id: 11, title: "Libra", value: "R$ 6.16", image: Libra },
 ];
+
+export const sections = [
+  {
+    id: 1,
+    title: "General",
+    items: [
+      { id: 2, name: "Market" },
+      { id: 3, name: "Service" },
+    ],
+  },
+  {
+    id: 4,
+    title: "Product",
+    items: [
+      { id: 5, name: "Sparks" },
+      { id: 6, name: "Snaps" },
+    ],
+  },
+  {
+    id: 7,
+    title: "Community",
+    items: [
+      { id: 5, name: "Ideas" },
+      { id: 6, name: "Streams" },
+    ],
+  },
+];

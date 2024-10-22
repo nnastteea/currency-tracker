@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Modal from "../Modal";
 import { CardProps } from "./interfaces";
-import * as S from "./style";
+import * as S from "./styles";
 
 function Card({ id, title, value, image }: CardProps) {
   const [isModalOpen, setModalOpen] = useState(false);

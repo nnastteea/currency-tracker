@@ -1,10 +1,10 @@
 import React from "react";
+import { quotes, stocks } from "@constants/Constants";
 
 import BlockWithCards from "../components/BlockWithCards";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LastUpdate from "../components/LastUpdate";
-import { quotes, stocks } from "../constCurrency";
 import * as S from "../GlobalStyles";
 
 function Home() {

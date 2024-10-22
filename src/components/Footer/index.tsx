@@ -1,7 +1,8 @@
 import React from "react";
-import Logo from "@assets/logo.svg";
+import Logo from "@assets/Logo.svg";
+import { sections } from "@constants/Constants";
 
-import * as S from "./style";
+import * as S from "./styles";
 
 function Footer() {
   return (
@@ -19,21 +20,14 @@ function Footer() {
         </S.TextFooter>
       </section>
       <S.SectionSecond>
-        <div>
-          <S.TitleOfSectionSecond>General</S.TitleOfSectionSecond>
-          <S.TextOfSectionSecond>Market</S.TextOfSectionSecond>
-          <S.TextOfSectionSecond>Service</S.TextOfSectionSecond>
-        </div>
-        <div>
-          <S.TitleOfSectionSecond>Product</S.TitleOfSectionSecond>
-          <S.TextOfSectionSecond>Sparks</S.TextOfSectionSecond>
-          <S.TextOfSectionSecond>Snaps</S.TextOfSectionSecond>
-        </div>
-        <div>
-          <S.TitleOfSectionSecond>Community</S.TitleOfSectionSecond>
-          <S.TextOfSectionSecond>Ideas</S.TextOfSectionSecond>
-          <S.TextOfSectionSecond>Streams</S.TextOfSectionSecond>
-        </div>
+        {sections.map((section) => (
+          <div key={section.id}>
+            <S.TitleOfSectionSecond>{section.title}</S.TitleOfSectionSecond>
+            {section.items.map(({ id, name }) => (
+              <S.TextOfSectionSecond key={id}>{name}</S.TextOfSectionSecond>
+            ))}
+          </div>
+        ))}
       </S.SectionSecond>
     </S.FooterContainer>
   );

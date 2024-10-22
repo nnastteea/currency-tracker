@@ -1,7 +1,7 @@
 import React from "react";
-import CircleUpdate from "@assets/circleUpdate.svg";
+import CircleUpdate from "@assets/CircleUpdate.svg";
 
-import * as S from "./style";
+import * as S from "./styles";
 
 function LastUpdate() {
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { quotes, stocks } from "@constants/Constants";
 
-import { quotes, stocks } from "../../constCurrency";
-import * as S from "./style";
+import * as S from "./styles";
 
 interface ModalProps {
   isOpen: boolean;

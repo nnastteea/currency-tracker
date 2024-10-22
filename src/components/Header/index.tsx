@@ -8,7 +8,7 @@ import * as S from "./styles";
 import { useMediaQuery } from "./useMediaQuery";
 
 function Header() {
-  const { isMobile, isTablet, isDesktop } = useMediaQuery();
+  const { isMobile } = useMediaQuery();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const openMenu = () => {

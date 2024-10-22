@@ -20,10 +20,10 @@ function Footer() {
         </S.TextFooter>
       </section>
       <S.SectionSecond>
-        {sections.map((section) => (
-          <div key={section.id}>
-            <S.TitleOfSectionSecond>{section.title}</S.TitleOfSectionSecond>
-            {section.items.map(({ id, name }) => (
+        {sections.map(({ id, title, items }) => (
+          <div key={id}>
+            <S.TitleOfSectionSecond>{title}</S.TitleOfSectionSecond>
+            {items.map(({ id, name }) => (
               <S.TextOfSectionSecond key={id}>{name}</S.TextOfSectionSecond>
             ))}
           </div>

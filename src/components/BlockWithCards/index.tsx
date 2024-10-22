@@ -2,7 +2,7 @@ import React from "react";
 
 import Card from "../Card";
 import { CardProps, SectionProps } from "./interfaces";
-import * as S from "./style";
+import * as S from "./styles";
 
 function BlockWithCards({ titleSection, cards }: SectionProps) {
   return (

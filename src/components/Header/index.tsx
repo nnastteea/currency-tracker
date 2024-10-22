@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import HeaderImg from "@assets/Header.svg";
-import Logo from "@assets/logo.svg";
-import Menu from "@assets/menu.svg";
+import Logo from "@assets/Logo.svg";
+import Menu from "@assets/Menu.svg";
 
 import Switch from "../SwitchButton";
-import * as S from "./style";
-import { useIsMobile } from "./useIsMobile";
+import * as S from "./styles";
+import { useMediaQuery } from "./useMediaQuery";
 
 function Header() {
-  const { isMobile } = useIsMobile();
+  const { isMobile } = useMediaQuery();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const openMenu = () => {

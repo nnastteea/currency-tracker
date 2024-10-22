@@ -13,6 +13,7 @@ const config: Configuration = {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
       "@assets": path.resolve("./src/assets"),
+      "@constants": path.resolve("./src/constants"),
     },
   },
   module: {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import * as S from "./style";
+import * as S from "./styles";
 
 function Switch() {
   const [isSwitch, setIsSwitch] = useState(false);

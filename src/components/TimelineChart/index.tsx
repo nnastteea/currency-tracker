@@ -63,11 +63,6 @@ class TimelineChart extends Component<{}, TimelineChartState> {
     const { currencyData, day, inputValue } = this.state;
     const value = parseFloat(inputValue);
 
-    if (isNaN(value)) {
-      alert("Пожалуйста, введите значение!");
-      return;
-    }
-
     const updatedData = [...currencyData];
     updatedData[day - 1] = value;
 

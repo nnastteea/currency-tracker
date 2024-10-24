@@ -85,3 +85,12 @@ export const TextOfSectionSecond = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.small}px;
   color: ${({ theme }) => theme.colors.lightGray};
 `;
+
+export const StartsupText = styled.p`
+  color: ${({ theme }) => theme.colors.lightGray};
+  font-size: ${({ theme }) => theme.fontSizes.extraSmall2}px;
+  text-align: center;
+  @media (max-width: ${({ theme }) => theme.sizes.xl11}px) {
+    font-size: ${({ theme }) => theme.fontSizes.extraSmall3}px;
+  }
+`;

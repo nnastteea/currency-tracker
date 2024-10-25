@@ -14,6 +14,7 @@ const config: Configuration = {
     alias: {
       "@assets": path.resolve("./src/assets"),
       "@constants": path.resolve("./src/constants"),
+      "@store": path.resolve("./src/store"),
     },
   },
   module: {

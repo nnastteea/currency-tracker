@@ -3,4 +3,6 @@ export interface CardProps {
   title: string;
   value: string;
   image: string;
+  abbreviation: string;
+  isQuote: boolean;
 }

@@ -4,11 +4,13 @@ import Modal from "../Modal";
 import { CardProps } from "./interfaces";
 import * as S from "./styles";
 
-function Card({ id, title, value, image }: CardProps) {
+function Card({ id, title, value, image, abbreviation, isQuote }: CardProps) {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleCardClick = () => {
-    setModalOpen(true);
+    if (isQuote) {
+      setModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {
@@ -23,11 +25,13 @@ function Card({ id, title, value, image }: CardProps) {
           <p>{value}</p>
         </S.TextInfo>
       </S.CardContainer>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        currencyData={{ title, value }}
-      />
+      {isQuote && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          currencyData={{ title, value, abbreviation }}
+        />
+      )}
     </>
   );
 }

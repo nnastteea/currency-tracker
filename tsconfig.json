@@ -16,6 +16,7 @@
     "paths": {
       "@assets/*": ["assets/*"],
       "@constants/*": ["constants/*"],
+      "@store/*": ["store/*"],
     }
   },
   "include": ["src/**/*", "src/@types/declarations.d.ts"], // Включает все файлы в директории src и ее поддиректориях

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { quotes as defaultQuotes, stocks } from "@constants/Constants";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { fetchCurrencyData } from "@store/sliceCurrency";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { useFetchCurrencyDataQuery } from "@store/currencyApi";
 
 import BlockWithCards from "../components/BlockWithCards";
 import Footer from "../components/Footer";
@@ -18,23 +19,31 @@ export interface CurrencyCard {
 }
 
 function Home() {
-  const dispatch = useAppDispatch();
-  const { quotes, loading, error } = useAppSelector((state) => state.currency);
+  const { data: quotes = {}, isLoading, error } = useFetchCurrencyDataQuery();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(fetchCurrencyData());
+  const processedQuotes = defaultQuotes.map((quote) => {
+    const quoteData = quotes[quote.abbreviation];
+    const value = quoteData ? quoteData.value.toFixed(5) : "loading...";
+
+    return {
+      ...quote,
+      value: value !== "loading..." ? `R$ ${value}` : value,
     };
+  });
 
-    fetchData();
-  }, [dispatch]);
+  function hasMessage(
+    error: FetchBaseQueryError | SerializedError,
+  ): error is FetchBaseQueryError & { message: string } {
+    return "message" in error;
+  }
 
-  const processedQuotes = defaultQuotes.map((quote) => ({
-    ...quote,
-    value: quotes[quote.abbreviation]
-      ? `R$ ${quotes[quote.abbreviation].value}`
-      : "loading...",
-  }));
+  const loadingMessage = isLoading ? <p>Loading...</p> : null;
+  const errorMessage = error ? (
+    <p>
+      Error:{" "}
+      {hasMessage(error) ? error.message : "An unexpected error occurred"}
+    </p>
+  ) : null;
 
   return (
     <>
@@ -47,8 +56,8 @@ function Home() {
         cards={processedQuotes}
         isQuote={true}
       />
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
+      {loadingMessage}
+      {errorMessage}
       <Footer />
     </>
   );

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { quotes as currencyList } from "@constants/Constants";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { fetchCurrencyData } from "@store/sliceCurrency";
+import { useFetchCurrencyDataQuery } from "@store/currencyApi";
 
 import * as S from "./styles";
 
@@ -16,17 +15,10 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, currencyData }: ModalProps) => {
-  const dispatch = useAppDispatch();
-  const { quotes, loading, error } = useAppSelector((state) => state.currency);
+  const { data: quotes = {} } = useFetchCurrencyDataQuery();
   const [amount, setAmount] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("");
   const [result, setResult] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (isOpen && Object.keys(quotes).length === 0 && !loading) {
-      dispatch(fetchCurrencyData());
-    }
-  }, [isOpen, dispatch, quotes, loading]);
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

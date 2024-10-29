@@ -20,16 +20,16 @@ function LastUpdate() {
     return typeof error === "object" && error !== null && "message" in error;
   }
 
-  const loadingMessage = isLoading ? <p>Loading...</p> : null;
+  const loadingMessage = isLoading && <p>Loading...</p>;
 
-  const errorMessage = error ? (
+  const errorMessage = error && (
     <p>
       Error:{" "}
       {hasMessage(error) ? error.message : "An unexpected error occurred"}
     </p>
-  ) : null;
+  );
 
-  const lastUpdateMessage = data ? (
+  const lastUpdateMessage = data && (
     <p>
       Last updated at{" "}
       {new Date().toLocaleTimeString([], {
@@ -38,7 +38,7 @@ function LastUpdate() {
         hour12: true,
       })}
     </p>
-  ) : null;
+  );
 
   return (
     <S.LastUpdateContainer>

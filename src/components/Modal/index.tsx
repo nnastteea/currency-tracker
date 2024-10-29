@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { quotes as currencyList } from "@constants/Constants";
 import { useFetchCurrencyDataQuery } from "@store/currencyApi";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { closeModal } from "@store/modalSlice";
 
 import * as S from "./styles";
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
   currencyData: {
     title: string;
     value: string;
@@ -14,7 +14,9 @@ interface ModalProps {
   };
 }
 
-const Modal = ({ isOpen, onClose, currencyData }: ModalProps) => {
+const Modal = ({ currencyData }: ModalProps) => {
+  const dispatch = useAppDispatch();
+  const isOpen = useAppSelector((state) => state.modal.isOpen);
   const { data: quotes = {} } = useFetchCurrencyDataQuery();
   const [amount, setAmount] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("");
@@ -42,7 +44,7 @@ const Modal = ({ isOpen, onClose, currencyData }: ModalProps) => {
 
     const baseCurrencyRate =
       parseFloat(currencyData.value.replace(/[^0-9.]/g, "")) || 1;
-    const selectedCurrencyRate = quotes[selectedCurrency].value;
+    const selectedCurrencyRate = quotes[selectedCurrency]?.value;
 
     if (isNaN(baseCurrencyRate) || isNaN(selectedCurrencyRate)) {
       setResult("Unable to obtain correct exchange rate");
@@ -59,7 +61,7 @@ const Modal = ({ isOpen, onClose, currencyData }: ModalProps) => {
     setAmount("");
     setSelectedCurrency("");
     setResult(null);
-    onClose();
+    dispatch(closeModal());
   };
 
   if (!isOpen) return null;
@@ -76,10 +78,7 @@ const Modal = ({ isOpen, onClose, currencyData }: ModalProps) => {
         <S.Content>
           <p>Текущий курс: {currencyData.value}</p>
           <S.InputContainer>
-            <label htmlFor="amount">
-              Enter the amount you want to convert to{" "}
-              {currencyData.abbreviation}:
-            </label>
+            <label htmlFor="amount">Enter the amount to convert:</label>
             <S.Input
               type="number"
               id="amount"

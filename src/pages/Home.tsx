@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { quotes as defaultQuotes, stocks } from "@constants/Constants";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useFetchCurrencyDataQuery } from "@store/currencyApi";
+import { RootState } from "@store/store";
 
 import BlockWithCards from "../components/BlockWithCards";
 import Footer from "../components/Footer";
@@ -37,13 +39,13 @@ function Home() {
     return "message" in error;
   }
 
-  const loadingMessage = isLoading ? <p>Loading...</p> : null;
-  const errorMessage = error ? (
+  const loadingMessage = isLoading && <p>Loading...</p>;
+  const errorMessage = error && (
     <p>
       Error:{" "}
       {hasMessage(error) ? error.message : "An unexpected error occurred"}
     </p>
-  ) : null;
+  );
 
   return (
     <>

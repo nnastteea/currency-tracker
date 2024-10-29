@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const BACKGROUND_COLOR = "rgba(0, 0, 0, 0.7)";
+const BACKGROUND_COLOR = "rgba(0, 0, 0, 0.4)";
 const MARGIN = 10;
 const PADDING = 8;
 const WIDTH1 = 105;

@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { openModal } from "@store/modalSlice";
 
 import Modal from "../Modal";
 import { CardProps } from "./interfaces";
 import * as S from "./styles";
 
 function Card({ id, title, value, image, abbreviation, isQuote }: CardProps) {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const isModalOpen = useAppSelector((state) => state.modal.isOpen);
+  const modalCurrencyData = useAppSelector((state) => state.modal.currencyData);
 
   const handleCardClick = () => {
     if (isQuote) {
-      setModalOpen(true);
+      dispatch(openModal({ title, value, abbreviation }));
     }
   };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
   return (
     <>
       <S.CardContainer onClick={handleCardClick}>
@@ -25,12 +26,8 @@ function Card({ id, title, value, image, abbreviation, isQuote }: CardProps) {
           <p>{value}</p>
         </S.TextInfo>
       </S.CardContainer>
-      {isQuote && (
-        <Modal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          currencyData={{ title, value, abbreviation }}
-        />
+      {isQuote && isModalOpen && modalCurrencyData && (
+        <Modal currencyData={modalCurrencyData} />
       )}
     </>
   );

@@ -12,6 +12,6 @@ const store = configureStore({
     getDefaultMiddleware().concat(currencyApi.middleware),
 });
 
-export type RootState = ReturnType<typeof store.getState>; // тип всего состояния хранилища
-export type AppDispatch = typeof store.dispatch; // тип dispatch функции
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 export default store;

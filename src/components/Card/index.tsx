@@ -8,9 +8,8 @@ import * as S from "./styles";
 
 function Card({ id, title, value, image, abbreviation, isQuote }: CardProps) {
   const dispatch = useAppDispatch();
-  const isModalOpen = useAppSelector((state) => state.modal.isOpen);
-  const modalCurrencyData = useAppSelector((state) => state.modal.currencyData);
-
+  const { isOpen: isModalOpen, currencyData: modalCurrencyData } =
+    useAppSelector((state) => state.modal);
   const handleCardClick = () => {
     if (isQuote) {
       dispatch(openModal({ title, value, abbreviation }));

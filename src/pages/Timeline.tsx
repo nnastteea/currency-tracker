@@ -1,10 +1,9 @@
 import React from "react";
 
 import Footer from "../components/Footer";
+import FormAndChart from "../components/FormAndChart";
 import Header from "../components/Header";
 import LastUpdate from "../components/LastUpdate";
-import SelectCurrency from "../components/SelectCurrency";
-import TimelineChart from "../components/TimelineChart";
 import * as S from "../GlobalStyles";
 
 class Timeline extends React.Component {
@@ -14,8 +13,7 @@ class Timeline extends React.Component {
         <S.GlobalStyle />
         <Header />
         <LastUpdate />
-        <SelectCurrency />
-        <TimelineChart />
+        <FormAndChart />
         <Footer />
       </>
     );

@@ -1,11 +1,7 @@
 import React from "react";
 
+import { ModalForChartProps } from "./interfaces";
 import * as S from "./styles";
-
-interface ModalForChartProps {
-  isOpen: boolean;
-  handleClose: () => void;
-}
 
 class ModalForChart extends React.Component<ModalForChartProps> {
   render() {
@@ -15,7 +11,7 @@ class ModalForChart extends React.Component<ModalForChartProps> {
       <S.ModalOverlay>
         <S.ModalContainer>
           <S.CloseButton onClick={handleClose}>✖</S.CloseButton>
-          <S.Title>График на 30 дней успешно построен!</S.Title>
+          <S.Title>The chart has been successfully built!</S.Title>
         </S.ModalContainer>
       </S.ModalOverlay>
     );

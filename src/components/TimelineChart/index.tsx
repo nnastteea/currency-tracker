@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component, createRef } from "react";
+import React, { ChangeEvent, Component } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   BarElement,
@@ -10,7 +10,9 @@ import {
   Tooltip,
 } from "chart.js";
 
+import Observer from "../../Observer";
 import ModalForChart from "../ModalForChart";
+import { TimelineChartProps, TimelineChartState } from "./interfaces";
 import * as S from "./styles";
 
 ChartJS.register(
@@ -22,33 +24,31 @@ ChartJS.register(
   Legend,
 );
 
-interface TimelineChartState {
-  currencyData: (number | null)[];
-  day: number;
-  inputValue: string;
-  isModalOpen: boolean;
-  windowWidth: number;
-}
-
-class TimelineChart extends Component<{}, TimelineChartState> {
-  constructor(props: {}) {
+class TimelineChart extends Component<TimelineChartProps, TimelineChartState> {
+  constructor(props: TimelineChartProps) {
     super(props);
 
+    const initialData = props.currencyData.map((item) => item.rate);
     this.state = {
-      currencyData: Array(31).fill(null),
       day: 1,
       inputValue: "",
       isModalOpen: false,
       windowWidth: window.innerWidth,
+      modifiedData: initialData,
+      selectedDayIndex: null,
     };
   }
 
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
+    Observer.subscribe("openModal", this.handleOpenModal);
+    Observer.subscribe("closeModal", this.handleCloseModal);
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize);
+    Observer.unsubscribe("openModal", this.handleOpenModal);
+    Observer.unsubscribe("closeModal", this.handleCloseModal);
   }
 
   handleResize = () => {
@@ -60,50 +60,60 @@ class TimelineChart extends Component<{}, TimelineChartState> {
   };
 
   handleSubmit = () => {
-    const { currencyData, day, inputValue } = this.state;
-    const value = parseFloat(inputValue);
+    const { selectedDayIndex, inputValue, modifiedData } = this.state;
+    if (selectedDayIndex !== null && inputValue) {
+      const updatedData = [...modifiedData];
+      updatedData[selectedDayIndex] = parseFloat(inputValue);
 
-    const updatedData = [...currencyData];
-    updatedData[day - 1] = value;
-
-    this.setState({
-      currencyData: updatedData,
-      day: day + 1,
-      inputValue: "",
-    });
-
-    if (day === this.getDaysInMounth()) {
-      this.setState({ day: 1, inputValue: "", isModalOpen: true });
+      this.setState({
+        modifiedData: updatedData,
+        inputValue: "",
+        selectedDayIndex: null,
+      });
+      Observer.notify("openModal");
     }
+  };
+
+  handleChartClick = (event: any, elements: any[]) => {
+    if (elements.length > 0) {
+      const clickedIndex = elements[0].index;
+      const selectedValue = this.state.modifiedData[clickedIndex];
+
+      this.setState({
+        selectedDayIndex: clickedIndex,
+        inputValue: selectedValue.toString(),
+      });
+    }
+  };
+
+  handleOpenModal = () => {
+    console.log("Opening modal");
+    this.setState({ isModalOpen: true });
   };
 
   handleCloseModal = () => {
     this.setState({ isModalOpen: false });
   };
 
-  getDaysInMounth = () => {
-    const date = new Date();
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-  };
-
   render() {
-    const { currencyData, day, inputValue, isModalOpen, windowWidth } =
-      this.state;
+    const { currencyData, loading, error } = this.props;
+    const { inputValue, isModalOpen, windowWidth, modifiedData } = this.state;
 
-    const validData = currencyData.map((value) => (value !== null ? value : 0));
+    if (loading) return <S.InfoP>Loading data...</S.InfoP>;
+    if (error) return <S.InfoP>Error: {error}</S.InfoP>;
 
     const chartData = {
       labels: Array.from(
-        { length: this.getDaysInMounth() },
-        (day, i) => `Day ${i + 1}`,
+        { length: modifiedData.length },
+        (_, i) => `Day ${i + 1}`,
       ),
       datasets: [
         {
           label: "Value",
-          data: validData,
-          backgroundColor: validData.map((value, index) => {
+          data: modifiedData,
+          backgroundColor: modifiedData.map((value, index) => {
             if (index === 0) return "grey";
-            return value > validData[index - 1] ? "green" : "red";
+            return value > (modifiedData[index - 1] || 0) ? "green" : "red";
           }),
           borderColor: "rgba(255, 255, 255, 0.2)",
           borderWidth: 1,
@@ -154,28 +164,36 @@ class TimelineChart extends Component<{}, TimelineChartState> {
         },
       },
       responsive: true,
+      onClick: this.handleChartClick,
     };
 
     return (
       <S.Container>
         <S.InputContainer>
-          <label>
-            Day {day}: Enter Value:{" "}
-            <S.InputField
-              type="number"
-              value={inputValue}
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <S.SubmitButton onClick={this.handleSubmit} disabled={!inputValue}>
-            Submit
-          </S.SubmitButton>
+          {this.state.selectedDayIndex !== null && (
+            <>
+              <label>
+                Day {this.state.selectedDayIndex + 1}: Enter Value:{" "}
+                <S.InputField
+                  type="number"
+                  value={inputValue}
+                  onChange={this.handleInputChange}
+                />
+              </label>
+              <S.SubmitButton
+                onClick={this.handleSubmit}
+                disabled={!inputValue}
+              >
+                Submit
+              </S.SubmitButton>
+            </>
+          )}
         </S.InputContainer>
         <S.ChartContainer>
           <Bar data={chartData} options={chartOptions} />
         </S.ChartContainer>
         <ModalForChart
-          isOpen={isModalOpen}
+          isOpen={this.state.isModalOpen}
           handleClose={this.handleCloseModal}
         />
       </S.Container>

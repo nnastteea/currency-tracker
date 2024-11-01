@@ -7,7 +7,6 @@ const WIDTH1 = 80;
 const WIDTH2 = 90;
 const WIDTH3 = 95;
 const WIDTH4 = 165;
-const WIDTH5 = 170;
 
 export const Container = styled.div`
   color: ${({ theme }) => theme.colors.white};
@@ -17,7 +16,11 @@ export const InputContainer = styled.div`
   padding: ${PADDING1}px ${PADDING3}px;
   font-size: ${({ theme }) => theme.fontSizes.small}px;
   display: flex;
+  margin-top: ${({ theme }) => theme.sizes.xs4}px;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 
   @media (max-width: ${({ theme }) => theme.sizes.xl11}px) {
     padding: ${PADDING1}px ${PADDING2}px;
@@ -41,7 +44,7 @@ export const SubmitButton = styled.button`
   cursor: pointer;
   margin-top: ${({ theme }) => theme.sizes.xs4}px;
   padding: ${({ theme }) => theme.sizes.xs6}px;
-  width: ${WIDTH5}px;
+  width: 350px;
   transition: 0.5s ease;
 
   &:hover {
@@ -73,4 +76,8 @@ export const ChartContainer = styled.div`
 export const InputField = styled.input`
   margin-left: ${({ theme }) => theme.sizes.xs4}px;
   padding: ${({ theme }) => theme.sizes.xs6}px;
+`;
+
+export const InfoP = styled.p`
+  color: ${({ theme }) => theme.colors.white};
 `;

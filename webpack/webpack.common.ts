@@ -11,7 +11,7 @@ const config: Configuration = {
     path: path.resolve(__dirname, "dist"),
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".svg"],
     alias: {
       "@assets": path.resolve("./src/assets"),
       "@constants": path.resolve("./src/constants"),

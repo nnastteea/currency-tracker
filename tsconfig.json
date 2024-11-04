@@ -20,5 +20,5 @@
     }
   },
   "include": ["src/**/*", "src/@types/declarations.d.ts"], // Включает все файлы в директории src и ее поддиректориях
-  "exclude": ["node_modules"] // Исключает файлы в node_modules и файлы тестов
+  "exclude": ["node_modules", "**/*.spec.ts"] // Исключает файлы в node_modules и файлы тестов
 }

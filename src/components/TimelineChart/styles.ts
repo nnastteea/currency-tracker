@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
-const PADDING1 = 10;
-const PADDING2 = 150;
-const PADDING3 = 190;
-const WIDTH1 = 80;
-const WIDTH2 = 90;
-const WIDTH3 = 95;
-const WIDTH4 = 165;
+const PADDING_VERTICAL = 10;
+const INPUT_CONTAINER_PADDING_LARGE = 150;
+const INPUT_CONTAINER_PADDING_HORIZONTAL = 190;
+const CHART_WIDTH_LARGE = 80;
+const CHART_WIDTH_MEDIUM = 90;
+const CHART_WIDTH_SMALL = 95;
+const BUTTON_WIDTH = 165;
 
 export const Container = styled.div`
   color: ${({ theme }) => theme.colors.white};
 `;
 
 export const InputContainer = styled.div`
-  padding: ${PADDING1}px ${PADDING3}px;
+  padding: ${PADDING_VERTICAL}px ${INPUT_CONTAINER_PADDING_HORIZONTAL}px;
   font-size: ${({ theme }) => theme.fontSizes.small}px;
   display: flex;
   margin-top: ${({ theme }) => theme.sizes.xs4}px;
@@ -23,7 +23,7 @@ export const InputContainer = styled.div`
   text-align: center;
 
   @media (max-width: ${({ theme }) => theme.sizes.xl11}px) {
-    padding: ${PADDING1}px ${PADDING2}px;
+    padding: ${PADDING_VERTICAL}px ${INPUT_CONTAINER_PADDING_LARGE}px;
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
@@ -53,23 +53,23 @@ export const SubmitButton = styled.button`
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
-    width: ${WIDTH4}px;
+    width: ${BUTTON_WIDTH}px;
   }
 `;
 
 export const ChartContainer = styled.div`
-  width: ${WIDTH1}%;
+  width: ${CHART_WIDTH_LARGE}%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   margin-top: ${({ theme }) => theme.sizes.xl}px;
 
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
-    width: ${WIDTH2}%;
+    width: ${CHART_WIDTH_MEDIUM}%;
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl8}px) {
-    width: ${WIDTH3}%;
+    width: ${CHART_WIDTH_SMALL}%;
   }
 `;
 

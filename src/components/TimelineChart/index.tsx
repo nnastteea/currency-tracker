@@ -116,7 +116,7 @@ class TimelineChart extends Component<TimelineChartProps, TimelineChartState> {
           data: modifiedData,
           backgroundColor: modifiedData.map((value, index) => {
             if (index === 0) return "grey";
-            return value > (modifiedData[index - 1] || 0) ? "green" : "red";
+            return value >= (modifiedData[index - 1] || 0) ? "green" : "red";
           }),
           borderColor: "rgba(255, 255, 255, 0.2)",
           borderWidth: 1,

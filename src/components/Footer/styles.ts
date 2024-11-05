@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
-const PADDING1 = 0;
-const PADDING2 = 25;
-const PADDING3 = 40;
-const PADDING4 = 50;
-const PADDING5 = 80;
-const PADDING6 = 100;
+const LOGO_PADDING_HORIZONTAL = 0;
+const LOGO_PADDING_TOP_BOTTOM = 25;
+const FOOTER_VERTICAL_PADDING = 40;
+const FOOTER_PADDING_MEDIUM = 50;
+const FOOTER_PADDING_LARGE = 80;
+const FOOTER_PADDING_EXTRA_LARGE = 100;
 
 export const FooterContainer = styled.article`
   color: ${({ theme }) => theme.colors.white};
   display: flex;
-  padding: ${PADDING3}px ${PADDING6}px;
+  padding: ${FOOTER_VERTICAL_PADDING}px ${FOOTER_PADDING_EXTRA_LARGE}px;
   justify-content: space-between;
 
   section {
@@ -19,11 +19,11 @@ export const FooterContainer = styled.article`
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl11}px) {
-    padding: ${PADDING3}px ${PADDING5}px;
+    padding: ${FOOTER_VERTICAL_PADDING}px ${FOOTER_PADDING_LARGE}px;
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl10}px) {
-    padding: ${PADDING3}px ${PADDING4}px;
+    padding: ${FOOTER_VERTICAL_PADDING}px ${FOOTER_PADDING_MEDIUM}px;
     display: block;
     section {
       max-width: ${({ theme }) => theme.sizes.xl3}%;
@@ -63,7 +63,7 @@ export const TitleFooter = styled.p`
 `;
 
 export const ImgLogo = styled.img`
-  padding: ${PADDING2}px ${PADDING1};
+  padding: ${LOGO_PADDING_TOP_BOTTOM}px ${LOGO_PADDING_HORIZONTAL};
   width: ${({ theme }) => theme.sizes.xs}px;
   height: ${({ theme }) => theme.sizes.xs}px;
 `;

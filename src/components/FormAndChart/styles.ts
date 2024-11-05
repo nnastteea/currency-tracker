@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-const PADDING = 8;
-const PADDING_MARGIN = 10;
-const WIDTH1 = 210;
-const WIDTH2 = 350;
+const DEFAULT_PADDING = 8;
+const DEFAULT_MARGIN = 10;
+const SELECT_WIDTH = 210;
+const BUTTON_WIDTH = 350;
 
 export const SelectCurrency = styled.select`
   background: ${({ theme }) => theme.colors.black};
@@ -11,11 +11,11 @@ export const SelectCurrency = styled.select`
   border: none;
   font-weight: ${({ theme }) => theme.sizes.xl7};
   font-size: ${({ theme }) => theme.fontSizes.small}px;
-  padding: ${PADDING_MARGIN}px;
+  padding: ${DEFAULT_MARGIN}px;
   cursor: pointer;
   position: relative;
-  margin-right: ${PADDING_MARGIN}px;
-  max-width: ${WIDTH1}px;
+  margin-right: ${DEFAULT_MARGIN}px;
+  max-width: ${SELECT_WIDTH}px;
   &:active {
     border: none;
   }
@@ -44,15 +44,15 @@ export const FormInputInfo = styled.form`
 `;
 
 export const BuildButton = styled.button`
-  width: ${WIDTH2}px;
-  padding: ${PADDING}px;
+  width: ${BUTTON_WIDTH}px;
+  padding: ${DEFAULT_PADDING}px;
   background: ${({ theme }) => theme.colors.limeGreen};
   color: black;
   font-size: ${({ theme }) => theme.fontSizes.extraSmall}px;
   border: none;
   border-radius: ${({ theme }) => theme.sizes.xs7}px;
   cursor: pointer;
-  margin-top: ${PADDING_MARGIN}px;
+  margin-top: ${DEFAULT_MARGIN}px;
   transition: 0.5s ease;
 
   &:hover {
@@ -66,9 +66,9 @@ export const DateInput = styled.input`
   color: ${({ theme }) => theme.colors.white};
   border: none;
   font-size: ${({ theme }) => theme.fontSizes.small}px;
-  padding: ${PADDING}px;
-  margin-right: ${PADDING_MARGIN}px;
-  max-width: ${WIDTH1}px;
+  padding: ${DEFAULT_PADDING}px;
+  margin-right: ${DEFAULT_MARGIN}px;
+  max-width: ${SELECT_WIDTH}px;
   cursor: pointer;
 
   &::placeholder {

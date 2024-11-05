@@ -23,16 +23,17 @@ class SelectCurrency extends React.Component<
 
   componentDidMount() {
     const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() - 10);
+    const endDate = today;
 
-    const startDate = yesterday.toISOString().split("T")[0];
-    const endDate = yesterday.toISOString().split("T")[0];
+    const startDateStr = startDate.toISOString().split("T")[0];
+    const endDateStr = endDate.toISOString().split("T")[0];
 
     this.props.fetchCurrencyData({
-      currency: "USD",
-      startDate,
-      endDate,
+      currency: "BYN",
+      startDate: startDateStr,
+      endDate: endDateStr,
     });
   }
 
@@ -96,7 +97,8 @@ class SelectCurrency extends React.Component<
         </S.FormInputInfo>
         {showMessage && (
           <S.InfoP>
-            USD is taken as the base currrency to create the chart
+            The chart for BYN. In all cases USD is taken as the base currrency
+            to create the chart
           </S.InfoP>
         )}
         {loading && <S.InfoP>Loading data...</S.InfoP>}

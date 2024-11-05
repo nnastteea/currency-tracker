@@ -1,24 +1,26 @@
 import styled from "styled-components";
 
-const PADDING1 = 0;
-const PADDING2 = 5;
-const PADDING3 = 7;
-const PADDING4 = 10;
-const PADDING5 = 30;
-const PADDING6 = 40;
+const LOGO_PADDING_HORIZONTAL = 0;
+const LOGO_PADDING_SMALL = 5;
+const LOGO_PADDING_MEDIUM = 7;
+const HEADER_VERTICAL_PADDING = 10;
+const HEADER_HORIZONTAL_PADDING_LARGE = 30;
+const HEADER_HORIZONTAL_PADDING_EXTRA_LARGE = 40;
 
 export const HeaderContainer = styled.header`
   color: ${({ theme }) => theme.colors.white};
   display: flex;
   justify-content: space-between;
-  padding: ${PADDING4}px ${PADDING6}px;
+  padding: ${HEADER_VERTICAL_PADDING}px
+    ${HEADER_HORIZONTAL_PADDING_EXTRA_LARGE}px;
 
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
-    padding: ${PADDING4}px ${PADDING5}px;
+    padding: ${HEADER_VERTICAL_PADDING}px ${HEADER_HORIZONTAL_PADDING_LARGE}px;
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl8}px) {
-    padding: ${PADDING4}px ${PADDING6}px;
+    padding: ${HEADER_VERTICAL_PADDING}px
+      ${HEADER_HORIZONTAL_PADDING_EXTRA_LARGE}px;
   }
 `;
 
@@ -36,7 +38,8 @@ export const NavContainer = styled.nav`
 export const MenuItem = styled.a`
   cursor: pointer;
   text-decoration: none;
-  padding: ${PADDING4}px ${PADDING6}px;
+  padding: ${HEADER_VERTICAL_PADDING}px
+    ${HEADER_HORIZONTAL_PADDING_EXTRA_LARGE}px;
 
   transition: 0.5s ease;
 
@@ -48,11 +51,11 @@ export const MenuItem = styled.a`
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl10}px) {
-    padding: ${PADDING4}px ${PADDING5}px;
+    padding: ${HEADER_VERTICAL_PADDING}px ${HEADER_HORIZONTAL_PADDING_LARGE}px;
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
-    padding: ${PADDING4}px ${PADDING4}px;
+    padding: ${HEADER_VERTICAL_PADDING}px ${HEADER_VERTICAL_PADDING}px;
   }
 `;
 
@@ -61,7 +64,7 @@ export const LogoContainer = styled.div`
     img {
       width: ${({ theme }) => theme.sizes.xs}px;
       height: ${({ theme }) => theme.sizes.xs}px;
-      padding: ${PADDING2}px ${PADDING1};
+      padding: ${LOGO_PADDING_SMALL}px ${LOGO_PADDING_HORIZONTAL};
     }
   }
 
@@ -69,7 +72,7 @@ export const LogoContainer = styled.div`
     img {
       width: ${({ theme }) => theme.sizes.xs2}px;
       height: ${({ theme }) => theme.sizes.xs2}px;
-      padding: ${PADDING3}px ${PADDING1};
+      padding: ${LOGO_PADDING_MEDIUM}px ${LOGO_PADDING_HORIZONTAL};
     }
   }
 `;
@@ -92,7 +95,7 @@ export const DropDownMenu = styled.div`
 `;
 
 export const DropDownItem = styled.a`
-  padding: ${PADDING4}px ${PADDING5}px;
+  padding: ${HEADER_VERTICAL_PADDING}px ${HEADER_HORIZONTAL_PADDING_LARGE}px;
   &:hover {
     transform: scale(1.05);
   }
@@ -103,7 +106,7 @@ export const DropDownItem = styled.a`
 
 export const HeaderImage = styled.img`
   width: calc(100% - 20px);
-  padding: ${PADDING1} ${PADDING4}px;
+  padding: ${LOGO_PADDING_HORIZONTAL} ${HEADER_VERTICAL_PADDING}px;
   height: auto;
   object-fit: cover;
 `;

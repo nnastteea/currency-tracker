@@ -1,20 +1,20 @@
 import styled from "styled-components";
 
-const PADDING_MARGIN1 = 0;
-const PADDING_MARGIN2 = 5;
-const PADDING_MARGIN3 = 10;
-const PADDING_MARGIN4 = 20;
+const CARD_MARGIN_HORIZONTAL = 0;
+const TEXT_MARGIN_SMALL = 5;
+const CARD_PADDING_TOP_BOTTOM = 10;
+const CARD_PADDING_LEFT_RIGHT = 20;
 
 export const CardContainer = styled.div`
   display: flex;
   width: calc(40% - 10px);
   align-items: center;
   gap: ${({ theme }) => theme.sizes.xs4}px;
-  padding: ${PADDING_MARGIN3}px ${PADDING_MARGIN4}px;
+  padding: ${CARD_PADDING_TOP_BOTTOM}px ${CARD_PADDING_LEFT_RIGHT}px;
   background-color: ${({ theme }) => theme.colors.DarkGray};
   border: 1px solid ${({ theme }) => theme.colors.gray};
   border-radius: ${({ theme }) => theme.sizes.xs6}px;
-  margin: ${PADDING_MARGIN4}px ${PADDING_MARGIN1};
+  margin: ${CARD_PADDING_LEFT_RIGHT}px ${CARD_MARGIN_HORIZONTAL};
   cursor: pointer;
   transition: 0.5s ease;
 
@@ -48,6 +48,6 @@ export const TextInfo = styled.div`
   }
 
   & > * {
-    margin: ${PADDING_MARGIN2}px ${PADDING_MARGIN1};
+    margin: ${TEXT_MARGIN_SMALL}px ${CARD_MARGIN_HORIZONTAL};
   }
 `;

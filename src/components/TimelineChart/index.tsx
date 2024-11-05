@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Component } from "react";
 import { Bar } from "react-chartjs-2";
+import Observer from "@observer/Observer";
 import {
   BarElement,
   CategoryScale,
@@ -10,7 +11,6 @@ import {
   Tooltip,
 } from "chart.js";
 
-import Observer from "../../Observer";
 import ModalForChart from "../ModalForChart";
 import { TimelineChartProps, TimelineChartState } from "./interfaces";
 import * as S from "./styles";
@@ -43,6 +43,13 @@ class TimelineChart extends Component<TimelineChartProps, TimelineChartState> {
     window.addEventListener("resize", this.handleResize);
     Observer.subscribe("openModal", this.handleOpenModal);
     Observer.subscribe("closeModal", this.handleCloseModal);
+  }
+
+  componentDidUpdate(prevProps: TimelineChartProps) {
+    if (prevProps.currencyData !== this.props.currencyData) {
+      const initialData = this.props.currencyData.map((item) => item.rate);
+      this.setState({ modifiedData: initialData });
+    }
   }
 
   componentWillUnmount() {
@@ -96,11 +103,7 @@ class TimelineChart extends Component<TimelineChartProps, TimelineChartState> {
   };
 
   render() {
-    const { currencyData, loading, error } = this.props;
     const { inputValue, isModalOpen, windowWidth, modifiedData } = this.state;
-
-    if (loading) return <S.InfoP>Loading data...</S.InfoP>;
-    if (error) return <S.InfoP>Error: {error}</S.InfoP>;
 
     const chartData = {
       labels: Array.from(

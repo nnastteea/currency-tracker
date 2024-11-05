@@ -10,7 +10,7 @@ function Footer() {
       <S.FooterContainer>
         <section>
           <S.ContainerTitleAndLogo>
-            <S.ImgLogo src={Logo} />
+            <S.ImgLogo src={Logo} alt="logo" />
             <S.TitleFooter>Modsen Currency Tracker</S.TitleFooter>
           </S.ContainerTitleAndLogo>
           <S.TextFooter>

@@ -38,6 +38,7 @@ export const fetchCurrencyData = createAsyncThunk(
         "X-CoinAPI-Key": apiKey,
       },
     });
+    console.log(response.data);
     return response.data.map((item: CurrencyDataItem) => ({
       time: item.time_period_start,
       rate: item.rate_close,

@@ -16,6 +16,7 @@ const config: Configuration = {
       "@assets": path.resolve("./src/assets"),
       "@constants": path.resolve("./src/constants"),
       "@store": path.resolve("./src/store"),
+      "@observer": path.resolve("./src/observer"),
     },
   },
   module: {

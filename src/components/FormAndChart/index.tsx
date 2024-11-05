@@ -55,12 +55,9 @@ class SelectCurrency extends React.Component<
           <div>
             <S.SelectCurrency onChange={this.handleCurrencyChange}>
               <S.OptionCurrency value="">Select currency</S.OptionCurrency>
-              {currencies.map((currency) => (
-                <S.OptionCurrency
-                  key={currency.id}
-                  value={currency.abbreviation}
-                >
-                  {currency.title}
+              {currencies.map(({ id, abbreviation, title }) => (
+                <S.OptionCurrency key={id} value={abbreviation}>
+                  {title}
                 </S.OptionCurrency>
               ))}
             </S.SelectCurrency>

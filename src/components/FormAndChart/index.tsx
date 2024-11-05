@@ -17,7 +17,23 @@ class SelectCurrency extends React.Component<
       selectedCurrency: "",
       startDate: "",
       endDate: "",
+      showMessage: true,
     };
+  }
+
+  componentDidMount() {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    const startDate = yesterday.toISOString().split("T")[0];
+    const endDate = yesterday.toISOString().split("T")[0];
+
+    this.props.fetchCurrencyData({
+      currency: "USD",
+      startDate,
+      endDate,
+    });
   }
 
   handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -41,6 +57,7 @@ class SelectCurrency extends React.Component<
         startDate,
         endDate,
       });
+      this.setState({ showMessage: false });
     } else {
       alert("Пожалуйста, введите данные!");
     }
@@ -48,6 +65,7 @@ class SelectCurrency extends React.Component<
 
   render() {
     const { currencyData, loading, error } = this.props;
+    const { showMessage } = this.state;
     const currencies = [...quotes];
     return (
       <S.SelectCurrencyContainer>
@@ -76,6 +94,11 @@ class SelectCurrency extends React.Component<
           </div>
           <S.BuildButton type="submit">Create a chart</S.BuildButton>
         </S.FormInputInfo>
+        {showMessage && (
+          <S.InfoP>
+            USD is taken as the base currrency to create the chart
+          </S.InfoP>
+        )}
         {loading && <S.InfoP>Loading data...</S.InfoP>}
         {error && <S.InfoP>Error: {error}</S.InfoP>}
         {currencyData.length > 0 && (

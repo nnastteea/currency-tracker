@@ -13,4 +13,5 @@ export interface SelectCurrencyState {
   selectedCurrency: string;
   startDate: string;
   endDate: string;
+  showMessage: boolean;
 }

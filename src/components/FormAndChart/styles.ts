@@ -88,4 +88,7 @@ export const DateInput = styled.input`
 `;
 export const InfoP = styled.p`
   color: ${({ theme }) => theme.colors.white};
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSizes.small}px;
+  margin-top: 30px;
 `;

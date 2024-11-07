@@ -1,43 +1,59 @@
-import React, { ChangeEvent, Component } from "react";
-import { Bar } from "react-chartjs-2";
+import React, { Component } from "react";
+import { Chart } from "react-chartjs-2";
 import Observer from "@observer/Observer";
-import {
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from "chart.js";
+import { Chart as ChartJS, ChartOptions, registerables } from "chart.js";
+import styled from "styled-components";
 
-import ModalForChart from "../ModalForChart";
-import { TimelineChartProps, TimelineChartState } from "./interfaces";
 import * as S from "./styles";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-);
+import "chartjs-adapter-date-fns";
 
-class TimelineChart extends Component<TimelineChartProps, TimelineChartState> {
-  constructor(props: TimelineChartProps) {
-    super(props);
+ChartJS.register(...registerables);
 
-    const initialData = props.currencyData.map((item) => item.rate);
-    this.state = {
-      day: 1,
-      inputValue: "",
-      isModalOpen: false,
-      windowWidth: window.innerWidth,
-      modifiedData: initialData,
-      selectedDayIndex: null,
-    };
-  }
+import {
+  CandlestickController,
+  CandlestickElement,
+} from "chartjs-chart-financial";
+ChartJS.register(CandlestickController, CandlestickElement);
+
+import ModalForChart from "../ModalForChart";
+
+interface ChartDataItem {
+  time: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+}
+
+interface Props {
+  currencyData: ChartDataItem[];
+  loading: boolean;
+  error: string | null;
+}
+
+interface State {
+  selectedItem: number | null;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  isModalOpen: boolean;
+  data: ChartDataItem[];
+  windowWidth: number;
+}
+
+class TimelineChart extends Component<Props, State> {
+  state: State = {
+    selectedItem: null,
+    open: 0,
+    high: 0,
+    low: 0,
+    close: 0,
+    isModalOpen: false,
+    data: this.props.currencyData,
+    windowWidth: window.innerWidth,
+  };
 
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
@@ -45,10 +61,9 @@ class TimelineChart extends Component<TimelineChartProps, TimelineChartState> {
     Observer.subscribe("closeModal", this.handleCloseModal);
   }
 
-  componentDidUpdate(prevProps: TimelineChartProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.currencyData !== this.props.currencyData) {
-      const initialData = this.props.currencyData.map((item) => item.rate);
-      this.setState({ modifiedData: initialData });
+      this.setState({ data: this.props.currencyData });
     }
   }
 
@@ -62,34 +77,54 @@ class TimelineChart extends Component<TimelineChartProps, TimelineChartState> {
     this.setState({ windowWidth: window.innerWidth });
   };
 
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: e.target.value });
-  };
+  handleChartClick = (event: any) => {
+    const chartInstance = event.chart;
+    const elements = chartInstance.getElementsAtEventForMode(
+      event.native,
+      "nearest",
+      { intersect: false },
+      true,
+    );
 
-  handleSubmit = () => {
-    const { selectedDayIndex, inputValue, modifiedData } = this.state;
-    if (selectedDayIndex !== null && inputValue) {
-      const updatedData = [...modifiedData];
-      updatedData[selectedDayIndex] = parseFloat(inputValue);
+    if (elements.length > 0) {
+      const index = elements[0].index;
+      const selectedData = this.props.currencyData[index];
 
       this.setState({
-        modifiedData: updatedData,
-        inputValue: "",
-        selectedDayIndex: null,
+        selectedItem: index,
+        open: selectedData.open,
+        high: selectedData.high,
+        low: selectedData.low,
+        close: selectedData.close,
       });
-      Observer.notify("openModal");
     }
   };
 
-  handleChartClick = (event: any, elements: any[]) => {
-    if (elements.length > 0) {
-      const clickedIndex = elements[0].index;
-      const selectedValue = this.state.modifiedData[clickedIndex];
+  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    this.setState((prevState) => ({
+      ...prevState,
+      [name]: parseFloat(value),
+    }));
+  };
 
+  handleSubmit = () => {
+    const { selectedItem, open, high, low, close } = this.state;
+    if (selectedItem !== null) {
+      const updatedData = [...this.state.data];
+      updatedData[selectedItem] = {
+        ...updatedData[selectedItem],
+        open,
+        high,
+        low,
+        close,
+      };
       this.setState({
-        selectedDayIndex: clickedIndex,
-        inputValue: selectedValue.toString(),
+        data: updatedData,
+        isModalOpen: true,
+        selectedItem: null,
       });
+      Observer.notify("openModal");
     }
   };
 
@@ -103,97 +138,138 @@ class TimelineChart extends Component<TimelineChartProps, TimelineChartState> {
   };
 
   render() {
-    const { inputValue, isModalOpen, windowWidth, modifiedData } = this.state;
+    const { loading, error } = this.props;
+    const { selectedItem, open, high, low, close, data } = this.state;
 
+    if (loading) {
+      return <p>Loading data...</p>;
+    }
+
+    if (error) {
+      return <p>Error: {error}</p>;
+    }
+
+    const dataPoints = data.map((item) => ({
+      x: new Date(item.time),
+      o: item.open,
+      h: item.high,
+      l: item.low,
+      c: item.close,
+    }));
+
+    // Опции для графика
     const chartData = {
-      labels: Array.from(
-        { length: modifiedData.length },
-        (_, i) => `Day ${i + 1}`,
-      ),
       datasets: [
         {
-          label: "Value",
-          data: modifiedData,
-          backgroundColor: modifiedData.map((value, index) => {
-            if (index === 0) return "grey";
-            return value >= (modifiedData[index - 1] || 0) ? "green" : "red";
-          }),
-          borderColor: "rgba(255, 255, 255, 0.2)",
+          label: "Currency Prices",
+          data: dataPoints,
+          borderColor: "rgba(255, 255, 255, 1)",
           borderWidth: 1,
+          maxBarThickness: 20,
         },
       ],
     };
 
-    const chartOptions = {
+    const options: ChartOptions<"candlestick"> = {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: "#fff",
+          },
+        },
+      },
       scales: {
         x: {
+          type: "time",
+          time: {
+            unit: "day",
+          },
           grid: {
-            display: true,
             color: "rgba(255, 255, 255, 0.2)",
           },
-          title: {
-            display: windowWidth > 550,
-            text: "Day",
-            color: "white",
-          },
           ticks: {
-            display: false,
+            color: "#fff",
+            autoSkip: true,
+            maxTicksLimit: 100,
+            callback: (value) => {
+              const date = new Date(value);
+              return date.toLocaleDateString(undefined, {
+                day: "numeric",
+                month: "short",
+              });
+            },
           },
-          border: {
-            color: "white",
-            width: 3,
+          title: {
+            display: true,
+            text: "Day",
+            color: "#fff",
           },
         },
         y: {
           grid: {
-            display: true,
             color: "rgba(255, 255, 255, 0.2)",
           },
+          ticks: {
+            color: "#fff",
+          },
           title: {
-            display: windowWidth > 550,
+            display: true,
             text: "Value",
-            color: "white",
-          },
-          beginAtZero: true,
-          border: {
-            color: "white",
-            width: 3,
+            color: "#fff",
           },
         },
       },
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-      responsive: true,
       onClick: this.handleChartClick,
+      events: ["click", "mousemove"],
     };
 
     return (
       <S.Container>
-        <S.InputContainer>
-          {this.state.selectedDayIndex !== null && (
-            <>
-              <label>
-                Day {this.state.selectedDayIndex + 1}: Enter Value:{" "}
-                <S.InputField
-                  type="number"
-                  value={inputValue}
-                  onChange={this.handleInputChange}
-                />
-              </label>
-              <S.SubmitButton
-                onClick={this.handleSubmit}
-                disabled={!inputValue}
-              >
-                Submit
-              </S.SubmitButton>
-            </>
-          )}
-        </S.InputContainer>
+        {selectedItem !== null && (
+          <S.InputContainer>
+            <h4>Edit Values for Day {selectedItem + 1}</h4>
+            <S.LabelContainer>
+              Open:
+              <S.InputField
+                type="number"
+                name="open"
+                value={open}
+                onChange={this.handleInputChange}
+              />
+            </S.LabelContainer>
+            <S.LabelContainer>
+              High:
+              <S.InputField
+                type="number"
+                name="high"
+                value={high}
+                onChange={this.handleInputChange}
+              />
+            </S.LabelContainer>
+            <S.LabelContainer>
+              Low:
+              <S.InputField
+                type="number"
+                name="low"
+                value={low}
+                onChange={this.handleInputChange}
+              />
+            </S.LabelContainer>
+            <S.LabelContainer>
+              Close:
+              <S.InputField
+                type="number"
+                name="close"
+                value={close}
+                onChange={this.handleInputChange}
+              />
+            </S.LabelContainer>
+            <S.SubmitButton onClick={this.handleSubmit}>Submit</S.SubmitButton>
+          </S.InputContainer>
+        )}
         <S.ChartContainer>
-          <Bar data={chartData} options={chartOptions} />
+          <Chart type="candlestick" data={chartData} options={options} />
         </S.ChartContainer>
         <ModalForChart
           isOpen={this.state.isModalOpen}

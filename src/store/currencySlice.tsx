@@ -1,68 +1,96 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { CurrencyDataItem, CurrencyState } from "./interfaces";
+const COIN_API_URL = "https://rest.coinapi.io/v1/";
+const COIN_API_KEY = process.env.REACT_APP_API_KEY_FOR_CHART;
+
+export interface CurrencyRate {
+  time_period_start: string;
+  time_period_end: string;
+  rate_open: number;
+  rate_close: number;
+  rate_high: number;
+  rate_low: number;
+}
+
+export interface CurrencyHistoryParams {
+  currencyCode: string;
+  dayCount: number;
+}
+
+export interface CurrencyState {
+  history: CurrencyRate[];
+  status: "idle" | "loading" | "succeeded" | "failed";
+  error: string | null;
+}
 
 const initialState: CurrencyState = {
-  data: [],
-  loading: false,
+  history: [],
+  status: "idle",
   error: null,
 };
 
-const apiKey = process.env.REACT_APP_API_KEY_FOR_CHART;
-console.log("API Key:", apiKey);
+export const fetchCurrencyHistory = createAsyncThunk<
+  CurrencyRate[],
+  CurrencyHistoryParams
+>("currency/fetchCurrencyHistory", async ({ currencyCode, dayCount }) => {
+  const startDate = getDaysAgo(dayCount);
+  const endDate = getToday();
 
-export const fetchCurrencyData = createAsyncThunk(
-  "currency/fetchCurrencyData",
-  async ({
-    currency,
-    startDate,
-    endDate,
-  }: {
-    currency: string;
-    startDate: string;
-    endDate: string;
-  }) => {
-    if (!currency) {
-      return [];
-    }
-    const url = `https://rest.coinapi.io/v1/exchangerate/${currency}/USD/history`;
-    const response = await axios.get(url, {
+  console.log("Fetching data from:", startDate, "to:", endDate);
+
+  const response = await axios.get(
+    `${COIN_API_URL}exchangerate/USD/${currencyCode}/history`,
+    {
       params: {
         period_id: "1DAY",
-        time_start: `${startDate}T00:00:00`,
-        time_end: `${endDate}T23:59:59`,
+        time_start: startDate,
+        time_end: endDate,
       },
       headers: {
+        "X-CoinAPI-Key": COIN_API_KEY,
         Accept: "application/json",
-        "X-CoinAPI-Key": apiKey,
       },
-    });
-    console.log(response.data);
-    return response.data.map((item: CurrencyDataItem) => ({
-      time: item.time_period_start,
-      rate: item.rate_close,
-    }));
-  },
-);
+    },
+  );
 
-export const currencySlice = createSlice({
+  console.log("API Response:", response.data);
+  return response.data;
+});
+
+const currencySlice = createSlice({
   name: "currency",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCurrencyData.pending, (state) => {
-        state.loading = true;
+      .addCase(fetchCurrencyHistory.pending, (state) => {
+        state.status = "loading";
         state.error = null;
       })
-      .addCase(fetchCurrencyData.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = action.payload;
-      })
-      .addCase(fetchCurrencyData.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || "Error fetching data";
+      .addCase(
+        fetchCurrencyHistory.fulfilled,
+        (state, action: PayloadAction<CurrencyRate[]>) => {
+          state.status = "succeeded";
+          state.history = action.payload;
+          console.log("Updated Currency History:", action.payload);
+        },
+      )
+      .addCase(fetchCurrencyHistory.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch data";
       });
   },
 });
+
+export default currencySlice.reducer;
+
+function getDaysAgo(days: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return date.toISOString().split("T")[0];
+}
+
+function getToday(): string {
+  return new Date().toISOString().split("T")[0];
+}

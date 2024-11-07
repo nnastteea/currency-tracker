@@ -1,40 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { quotes, stocks } from "@constants/Constants";
-import { fetchCurrencyData } from "@store/currencySlice";
+import { quotes } from "@constants/Constants";
+import { fetchCurrencyHistory } from "@store/currencySlice";
 
 import TimelineChart from "../TimelineChart";
-import { SelectCurrencyProps, SelectCurrencyState } from "./interfaces";
+import { CurrencyRate, Props, State } from "./interfaces";
 import * as S from "./styles";
 
-class SelectCurrency extends React.Component<
-  SelectCurrencyProps,
-  SelectCurrencyState
-> {
-  constructor(props: SelectCurrencyProps) {
-    super(props);
-    this.state = {
-      selectedCurrency: "",
-      startDate: "",
-      endDate: "",
-      showMessage: true,
-    };
-  }
+class SelectCurrency extends Component<Props, State> {
+  state: State = {
+    selectedCurrency: "",
+    startDate: "",
+    endDate: "",
+    showMessage: true,
+  };
 
   componentDidMount() {
     const today = new Date();
     const startDate = new Date(today);
     startDate.setDate(today.getDate() - 10);
     const endDate = today;
+    const formattedStartDate = startDate.toISOString().split("T")[0];
+    const formattedEndDate = endDate.toISOString().split("T")[0];
 
-    const startDateStr = startDate.toISOString().split("T")[0];
-    const endDateStr = endDate.toISOString().split("T")[0];
-
-    this.props.fetchCurrencyData({
-      currency: "BYN",
-      startDate: startDateStr,
-      endDate: endDateStr,
-    });
+    this.setState({ startDate: formattedStartDate, endDate: formattedEndDate });
+    this.props.fetchCurrencyHistory({ currencyCode: "BYN", dayCount: 10 });
   }
 
   handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -53,28 +43,44 @@ class SelectCurrency extends React.Component<
     event.preventDefault();
     const { selectedCurrency, startDate, endDate } = this.state;
     if (selectedCurrency && startDate && endDate) {
-      this.props.fetchCurrencyData({
-        currency: selectedCurrency,
-        startDate,
-        endDate,
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const timeDifference = end.getTime() - start.getTime();
+      const dayCount = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      console.log("Fetching data for:", {
+        currencyCode: selectedCurrency,
+        dayCount: dayCount,
+        startDate: startDate,
+        endDate: endDate,
       });
-      this.setState({ showMessage: false });
+      if (dayCount > 0) {
+        this.props.fetchCurrencyHistory({
+          currencyCode: selectedCurrency,
+          dayCount: dayCount,
+        });
+        this.setState({ showMessage: false });
+      } else {
+        alert("End date must be after start date!");
+      }
     } else {
-      alert("Пожалуйста, введите данные!");
+      alert("Please fill all fields!");
     }
   };
 
   render() {
+    const { selectedCurrency, startDate, endDate, showMessage } = this.state;
     const { currencyData, loading, error } = this.props;
-    const { showMessage } = this.state;
-    const currencies = [...quotes];
+
     return (
       <S.SelectCurrencyContainer>
         <S.FormInputInfo onSubmit={this.handleSubmit}>
           <div>
-            <S.SelectCurrency onChange={this.handleCurrencyChange}>
+            <S.SelectCurrency
+              onChange={this.handleCurrencyChange}
+              value={selectedCurrency}
+            >
               <S.OptionCurrency value="">Select currency</S.OptionCurrency>
-              {currencies.map(({ id, abbreviation, title }) => (
+              {quotes.map(({ id, abbreviation, title }) => (
                 <S.OptionCurrency key={id} value={abbreviation}>
                   {title}
                 </S.OptionCurrency>
@@ -82,46 +88,56 @@ class SelectCurrency extends React.Component<
             </S.SelectCurrency>
             <S.DateInput
               type="date"
-              value={this.state.startDate}
+              value={startDate}
               onChange={this.handleStartDateChange}
-              placeholder="Начальная дата"
+              placeholder="Start Date"
             />
             <S.DateInput
               type="date"
-              value={this.state.endDate}
+              value={endDate}
               onChange={this.handleEndDateChange}
-              placeholder="Конечная дата"
+              placeholder="End Date"
             />
           </div>
           <S.BuildButton type="submit">Create a chart</S.BuildButton>
         </S.FormInputInfo>
-        {showMessage && (
-          <S.InfoP>
-            The chart for BYN. In all cases USD is taken as the base currrency
-            to create the chart
-          </S.InfoP>
-        )}
-        {loading && <S.InfoP>Loading data...</S.InfoP>}
-        {error && <S.InfoP>Error: {error}</S.InfoP>}
-        {currencyData.length > 0 && (
-          <TimelineChart
-            currencyData={currencyData}
-            loading={loading}
-            error={error}
-          />
-        )}
+        <div>
+          {showMessage && (
+            <S.InfoPHeader>
+              Belarusian ruble exchange rate for the last 10 days
+              <br />
+              (USD is taken as the base currency)
+            </S.InfoPHeader>
+          )}
+          {loading && <S.InfoP>Loading data...</S.InfoP>}
+          {error && <S.InfoP>Error: {error}</S.InfoP>}
+          {currencyData.length > 0 && (
+            <TimelineChart
+              currencyData={currencyData.map((item: CurrencyRate) => ({
+                time: item.time_period_start,
+                open: item.rate_open,
+                high: item.rate_high,
+                low: item.rate_low,
+                close: item.rate_close,
+              }))}
+              loading={loading}
+              error={error}
+            />
+          )}
+        </div>
       </S.SelectCurrencyContainer>
     );
   }
 }
+
 const mapStateToProps = (state: any) => ({
-  currencyData: state.currency.data,
-  loading: state.currency.loading,
+  currencyData: state.currency.history,
+  loading: state.currency.status === "loading",
   error: state.currency.error,
 });
 
 const mapDispatchToProps = {
-  fetchCurrencyData,
+  fetchCurrencyHistory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectCurrency);

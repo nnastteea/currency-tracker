@@ -29,6 +29,7 @@ export const SelectCurrencyContainer = styled.div`
   width: 100%;
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -90,5 +91,12 @@ export const InfoP = styled.p`
   color: ${({ theme }) => theme.colors.white};
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.small}px;
+  margin-top: 30px;
+`;
+
+export const InfoPHeader = styled.p`
+  color: ${({ theme }) => theme.colors.white};
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSizes.extrasmall}px;
   margin-top: 30px;
 `;

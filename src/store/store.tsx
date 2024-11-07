@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { currencyApi } from "./currencyApi";
-import { currencySlice } from "./currencySlice";
+import currencyReducer from "./currencySlice";
 import { modalSlice } from "./modalSlice";
 
 const store = configureStore({
   reducer: {
     [currencyApi.reducerPath]: currencyApi.reducer,
     [modalSlice.name]: modalSlice.reducer,
-    [currencySlice.name]: currencySlice.reducer,
+    currency: currencyReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(currencyApi.middleware),

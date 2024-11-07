@@ -10,6 +10,9 @@ const BUTTON_WIDTH = 165;
 
 export const Container = styled.div`
   color: ${({ theme }) => theme.colors.white};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const InputContainer = styled.div`
@@ -32,6 +35,7 @@ export const InputContainer = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
+    flex-direction: column;
   }
 `;
 
@@ -61,6 +65,7 @@ export const ChartContainer = styled.div`
   width: ${CHART_WIDTH_LARGE}%;
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin-top: ${({ theme }) => theme.sizes.xl}px;
 
@@ -80,4 +85,8 @@ export const InputField = styled.input`
 
 export const InfoP = styled.p`
   color: ${({ theme }) => theme.colors.white};
+`;
+
+export const LabelContainer = styled.label`
+  max-width: ${({ theme }) => theme.sizes.xl7}px;
 `;

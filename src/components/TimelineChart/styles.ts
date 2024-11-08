@@ -7,6 +7,7 @@ const CHART_WIDTH_LARGE = 80;
 const CHART_WIDTH_MEDIUM = 90;
 const CHART_WIDTH_SMALL = 95;
 const BUTTON_WIDTH = 165;
+const SUBMIT_BUTTON_WIDTH = 350;
 
 export const Container = styled.div`
   color: ${({ theme }) => theme.colors.white};
@@ -48,7 +49,7 @@ export const SubmitButton = styled.button`
   cursor: pointer;
   margin-top: ${({ theme }) => theme.sizes.xs4}px;
   padding: ${({ theme }) => theme.sizes.xs6}px;
-  width: 350px;
+  width: ${SUBMIT_BUTTON_WIDTH}px;
   transition: 0.5s ease;
 
   &:hover {

@@ -12,16 +12,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@canvasjs/charts": "^3.10.14",
-    "@canvasjs/react-charts": "^1.0.2",
     "@reduxjs/toolkit": "^2.3.0",
     "chart.js": "^4.4.6",
     "chartjs-adapter-date-fns": "^3.0.0",
     "chartjs-chart-financial": "^0.2.1",
     "date-fns": "^4.1.0",
     "html-webpack-plugin": "^5.6.0",
-    "luxon": "^3.5.0",
-    "mapbox-gl": "^3.7.0",
     "node": "^20.18.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",

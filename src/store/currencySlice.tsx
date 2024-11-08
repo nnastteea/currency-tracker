@@ -37,8 +37,6 @@ export const fetchCurrencyHistory = createAsyncThunk<
   const startDate = getDaysAgo(dayCount);
   const endDate = getToday();
 
-  console.log("Fetching data from:", startDate, "to:", endDate);
-
   const response = await axios.get(
     `${COIN_API_URL}exchangerate/USD/${currencyCode}/history`,
     {
@@ -53,8 +51,6 @@ export const fetchCurrencyHistory = createAsyncThunk<
       },
     },
   );
-
-  console.log("API Response:", response.data);
   return response.data;
 });
 
@@ -83,8 +79,6 @@ const currencySlice = createSlice({
   },
 });
 
-export default currencySlice.reducer;
-
 function getDaysAgo(days: number): string {
   const date = new Date();
   date.setDate(date.getDate() - days);
@@ -94,3 +88,5 @@ function getDaysAgo(days: number): string {
 function getToday(): string {
   return new Date().toISOString().split("T")[0];
 }
+
+export default currencySlice.reducer;

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Chart } from "react-chartjs-2";
 import Observer from "@observer/Observer";
 import { Chart as ChartJS, ChartOptions, registerables } from "chart.js";
-import styled from "styled-components";
 
 import * as S from "./styles";
 
@@ -17,31 +16,11 @@ import {
 ChartJS.register(CandlestickController, CandlestickElement);
 
 import ModalForChart from "../ModalForChart";
+import { Props, State } from "./interfaces";
 
-interface ChartDataItem {
-  time: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-}
-
-interface Props {
-  currencyData: ChartDataItem[];
-  loading: boolean;
-  error: string | null;
-}
-
-interface State {
-  selectedItem: number | null;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  isModalOpen: boolean;
-  data: ChartDataItem[];
-  windowWidth: number;
-}
+const WHITE_COLOR = "#fff";
+const GRAY_COLOR = "rgba(255, 255, 255, 0.2)";
+const BLACK_COLOR = "rgba(255, 255, 255, 1)";
 
 class TimelineChart extends Component<Props, State> {
   state: State = {
@@ -63,6 +42,7 @@ class TimelineChart extends Component<Props, State> {
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.currencyData !== this.props.currencyData) {
+      console.log("New currency data received:", this.props.currencyData);
       this.setState({ data: this.props.currencyData });
     }
   }
@@ -72,10 +52,6 @@ class TimelineChart extends Component<Props, State> {
     Observer.unsubscribe("openModal", this.handleOpenModal);
     Observer.unsubscribe("closeModal", this.handleCloseModal);
   }
-
-  handleResize = () => {
-    this.setState({ windowWidth: window.innerWidth });
-  };
 
   handleChartClick = (event: any) => {
     const chartInstance = event.chart;
@@ -128,8 +104,11 @@ class TimelineChart extends Component<Props, State> {
     }
   };
 
+  handleResize = () => {
+    this.setState({ windowWidth: window.innerWidth });
+  };
+
   handleOpenModal = () => {
-    console.log("Opening modal");
     this.setState({ isModalOpen: true });
   };
 
@@ -142,11 +121,11 @@ class TimelineChart extends Component<Props, State> {
     const { selectedItem, open, high, low, close, data } = this.state;
 
     if (loading) {
-      return <p>Loading data...</p>;
+      return <S.InfoP>Loading data...</S.InfoP>;
     }
 
     if (error) {
-      return <p>Error: {error}</p>;
+      return <S.InfoP>Error: {error}</S.InfoP>;
     }
 
     const dataPoints = data.map((item) => ({
@@ -157,13 +136,12 @@ class TimelineChart extends Component<Props, State> {
       c: item.close,
     }));
 
-    // Опции для графика
     const chartData = {
       datasets: [
         {
           label: "Currency Prices",
           data: dataPoints,
-          borderColor: "rgba(255, 255, 255, 1)",
+          borderColor: BLACK_COLOR,
           borderWidth: 1,
           maxBarThickness: 20,
         },
@@ -175,7 +153,7 @@ class TimelineChart extends Component<Props, State> {
       plugins: {
         legend: {
           labels: {
-            color: "#fff",
+            color: WHITE_COLOR,
           },
         },
       },
@@ -186,10 +164,10 @@ class TimelineChart extends Component<Props, State> {
             unit: "day",
           },
           grid: {
-            color: "rgba(255, 255, 255, 0.2)",
+            color: GRAY_COLOR,
           },
           ticks: {
-            color: "#fff",
+            color: WHITE_COLOR,
             autoSkip: true,
             maxTicksLimit: 100,
             callback: (value) => {
@@ -203,20 +181,20 @@ class TimelineChart extends Component<Props, State> {
           title: {
             display: true,
             text: "Day",
-            color: "#fff",
+            color: WHITE_COLOR,
           },
         },
         y: {
           grid: {
-            color: "rgba(255, 255, 255, 0.2)",
+            color: GRAY_COLOR,
           },
           ticks: {
-            color: "#fff",
+            color: WHITE_COLOR,
           },
           title: {
             display: true,
             text: "Value",
-            color: "#fff",
+            color: WHITE_COLOR,
           },
         },
       },
@@ -224,47 +202,29 @@ class TimelineChart extends Component<Props, State> {
       events: ["click", "mousemove"],
     };
 
+    const inputs = [
+      { label: "Open", name: "open", value: open },
+      { label: "High", name: "high", value: high },
+      { label: "Low", name: "low", value: low },
+      { label: "Close", name: "close", value: close },
+    ];
+
     return (
       <S.Container>
         {selectedItem !== null && (
           <S.InputContainer>
             <h4>Edit Values for Day {selectedItem + 1}</h4>
-            <S.LabelContainer>
-              Open:
-              <S.InputField
-                type="number"
-                name="open"
-                value={open}
-                onChange={this.handleInputChange}
-              />
-            </S.LabelContainer>
-            <S.LabelContainer>
-              High:
-              <S.InputField
-                type="number"
-                name="high"
-                value={high}
-                onChange={this.handleInputChange}
-              />
-            </S.LabelContainer>
-            <S.LabelContainer>
-              Low:
-              <S.InputField
-                type="number"
-                name="low"
-                value={low}
-                onChange={this.handleInputChange}
-              />
-            </S.LabelContainer>
-            <S.LabelContainer>
-              Close:
-              <S.InputField
-                type="number"
-                name="close"
-                value={close}
-                onChange={this.handleInputChange}
-              />
-            </S.LabelContainer>
+            {inputs.map(({ label, name, value }) => (
+              <S.LabelContainer key={name}>
+                {label}:
+                <S.InputField
+                  type="number"
+                  name={name}
+                  value={value}
+                  onChange={this.handleInputChange}
+                />
+              </S.LabelContainer>
+            ))}
             <S.SubmitButton onClick={this.handleSubmit}>Submit</S.SubmitButton>
           </S.InputContainer>
         )}

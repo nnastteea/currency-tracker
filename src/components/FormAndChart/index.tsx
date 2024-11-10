@@ -39,26 +39,43 @@ class SelectCurrency extends Component<Props, State> {
     this.setState({ endDate: event.target.value });
   };
 
-  handleSubmit = (event: React.FormEvent) => {
+  handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const { selectedCurrency, startDate, endDate } = this.state;
+
     if (selectedCurrency && startDate && endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
       const timeDifference = end.getTime() - start.getTime();
       const dayCount = Math.ceil(timeDifference / (1000 * 3600 * 24));
-      console.log("Fetching data for:", {
-        currencyCode: selectedCurrency,
-        dayCount: dayCount,
-        startDate: startDate,
-        endDate: endDate,
-      });
+
       if (dayCount > 0) {
-        this.props.fetchCurrencyHistory({
+        const action = await this.props.fetchCurrencyHistory({
           currencyCode: selectedCurrency,
-          dayCount: dayCount,
+          dayCount,
         });
-        this.setState({ showMessage: false });
+
+        if (fetchCurrencyHistory.fulfilled.match(action)) {
+          const { currencyData } = action.payload;
+
+          if (currencyData && currencyData.length > 0) {
+            const actualStartDate = currencyData[0].time_period_start;
+            const actualEndDate =
+              currencyData[currencyData.length - 1].time_period_start;
+
+            this.setState({
+              startDate: actualStartDate.split("T")[0],
+              endDate: actualEndDate.split("T")[0],
+              showMessage: false,
+            });
+          } else {
+            alert(
+              "No data available for the selected currency and date range.",
+            );
+          }
+        } else {
+          alert("Failed to fetch currency history.");
+        }
       } else {
         alert("End date must be after start date!");
       }
@@ -111,7 +128,7 @@ class SelectCurrency extends Component<Props, State> {
           )}
           {loading && <S.InfoP>Loading data...</S.InfoP>}
           {error && <S.InfoP>Error: {error}</S.InfoP>}
-          {currencyData.length > 0 && (
+          {currencyData.length > 0 && !loading && (
             <TimelineChart
               currencyData={currencyData.map((item: CurrencyRate) => ({
                 time: item.time_period_start,

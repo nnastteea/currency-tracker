@@ -31,7 +31,7 @@ const initialState: CurrencyState = {
 };
 
 export const fetchCurrencyHistory = createAsyncThunk<
-  CurrencyRate[],
+  { currencyData: CurrencyRate[]; startDate: string; endDate: string },
   CurrencyHistoryParams
 >("currency/fetchCurrencyHistory", async ({ currencyCode, dayCount }) => {
   const startDate = getDaysAgo(dayCount);
@@ -51,7 +51,15 @@ export const fetchCurrencyHistory = createAsyncThunk<
       },
     },
   );
-  return response.data;
+
+  const currencyData = response.data;
+
+  // Получаем реальные даты из данных
+  const actualStartDate = currencyData[0]?.time_period_start || startDate;
+  const actualEndDate =
+    currencyData[currencyData.length - 1]?.time_period_end || endDate;
+
+  return { currencyData, startDate: actualStartDate, endDate: actualEndDate };
 });
 
 const currencySlice = createSlice({
@@ -66,10 +74,17 @@ const currencySlice = createSlice({
       })
       .addCase(
         fetchCurrencyHistory.fulfilled,
-        (state, action: PayloadAction<CurrencyRate[]>) => {
+        (
+          state,
+          action: PayloadAction<{
+            currencyData: CurrencyRate[];
+            startDate: string;
+            endDate: string;
+          }>,
+        ) => {
           state.status = "succeeded";
-          state.history = action.payload;
-          console.log("Updated Currency History:", action.payload);
+          state.history = action.payload.currencyData;
+          console.log("Updated Currency History:", action.payload.currencyData);
         },
       )
       .addCase(fetchCurrencyHistory.rejected, (state, action) => {

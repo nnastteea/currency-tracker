@@ -1,5 +1,6 @@
 export interface CurrencyRate {
   time_period_start: string;
+  time_period_end: string;
   rate_open: number;
   rate_high: number;
   rate_low: number;

@@ -70,7 +70,6 @@ export const DateInput = styled.input`
   padding: ${DEFAULT_PADDING}px;
   margin-right: ${DEFAULT_MARGIN}px;
   max-width: ${SELECT_WIDTH}px;
-  cursor: pointer;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.white};
@@ -82,6 +81,7 @@ export const DateInput = styled.input`
   }
 
   &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: ${({ theme }) => theme.sizes.xs7}px;
     padding: ${({ theme }) => theme.sizes.xs9}px;

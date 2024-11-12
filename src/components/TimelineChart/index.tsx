@@ -119,7 +119,8 @@ class TimelineChart extends Component<Props, State> {
 
   render() {
     const { loading, error } = this.props;
-    const { selectedItem, open, high, low, close, data } = this.state;
+    const { selectedItem, open, high, low, close, data, windowWidth } =
+      this.state;
 
     if (loading) {
       return <S.InfoP>Loading data...</S.InfoP>;
@@ -148,6 +149,8 @@ class TimelineChart extends Component<Props, State> {
       ],
     };
 
+    const fontSize = windowWidth < 700 ? 8 : 12;
+
     const options: ChartOptions<"candlestick"> = {
       responsive: true,
       plugins: {
@@ -169,12 +172,16 @@ class TimelineChart extends Component<Props, State> {
           ticks: {
             color: WHITE_COLOR,
             maxTicksLimit: data.length,
+            autoSkip: false,
             callback: (value) => {
               const date = new Date(value);
               return date.toLocaleDateString("en-US", {
                 day: "numeric",
                 month: "short",
               });
+            },
+            font: {
+              size: fontSize,
             },
           },
           title: {
@@ -188,6 +195,9 @@ class TimelineChart extends Component<Props, State> {
           },
           ticks: {
             color: WHITE_COLOR,
+            font: {
+              size: fontSize,
+            },
           },
           title: {
             display: true,

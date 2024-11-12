@@ -136,7 +136,6 @@ class TimelineChart extends Component<Props, State> {
       l: item.low,
       c: item.close,
     }));
-    console.log("erhfi", dataPoints);
     const chartData = {
       datasets: [
         {
@@ -179,9 +178,7 @@ class TimelineChart extends Component<Props, State> {
             },
           },
           title: {
-            display: true,
-            text: "Day",
-            color: WHITE_COLOR,
+            display: false,
           },
           bounds: "data",
         },

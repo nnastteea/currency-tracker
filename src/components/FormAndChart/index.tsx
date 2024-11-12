@@ -9,7 +9,7 @@ import * as S from "./styles";
 
 class SelectCurrency extends Component<Props, State> {
   state: State = {
-    selectedCurrency: "",
+    selectedCurrency: "ARS",
     startDate: "",
     endDate: "",
     showMessage: true,

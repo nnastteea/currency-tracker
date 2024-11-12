@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Chart } from "react-chartjs-2";
 import Observer from "@observer/Observer";
 import { Chart as ChartJS, ChartOptions, registerables } from "chart.js";
+import { enUS } from "date-fns/locale";
 
 import * as S from "./styles";
 
@@ -129,13 +130,13 @@ class TimelineChart extends Component<Props, State> {
     }
 
     const dataPoints = data.map((item) => ({
-      x: new Date(item.time),
+      x: new Date(item.time).getTime(),
       o: item.open,
       h: item.high,
       l: item.low,
       c: item.close,
     }));
-
+    console.log("erhfi", dataPoints);
     const chartData = {
       datasets: [
         {
@@ -168,11 +169,10 @@ class TimelineChart extends Component<Props, State> {
           },
           ticks: {
             color: WHITE_COLOR,
-            autoSkip: true,
-            maxTicksLimit: 100,
+            maxTicksLimit: data.length,
             callback: (value) => {
               const date = new Date(value);
-              return date.toLocaleDateString(undefined, {
+              return date.toLocaleDateString("en-US", {
                 day: "numeric",
                 month: "short",
               });
@@ -183,6 +183,7 @@ class TimelineChart extends Component<Props, State> {
             text: "Day",
             color: WHITE_COLOR,
           },
+          bounds: "data",
         },
         y: {
           grid: {

@@ -24,7 +24,7 @@ class SelectCurrency extends Component<Props, State> {
     const formattedEndDate = endDate.toISOString().split("T")[0];
 
     this.setState({ startDate: formattedStartDate, endDate: formattedEndDate });
-    this.props.fetchCurrencyHistory({ currencyCode: "BYN", dayCount: 10 });
+    this.props.fetchCurrencyHistory({ currencyCode: "ARS", dayCount: 10 });
   }
 
   handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -121,7 +121,7 @@ class SelectCurrency extends Component<Props, State> {
         <div>
           {showMessage && (
             <S.InfoPHeader>
-              Belarusian ruble exchange rate for the last 10 days
+              Argentine Perso exchange rate for the last 10 days
               <br />
               (USD is taken as the base currency)
             </S.InfoPHeader>

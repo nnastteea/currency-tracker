@@ -54,7 +54,6 @@ export const fetchCurrencyHistory = createAsyncThunk<
 
   const currencyData = response.data;
 
-  // Получаем реальные даты из данных
   const actualStartDate = currencyData[0]?.time_period_start || startDate;
   const actualEndDate =
     currencyData[currencyData.length - 1]?.time_period_end || endDate;

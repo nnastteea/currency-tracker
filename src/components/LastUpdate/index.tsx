@@ -7,7 +7,12 @@ import { useFetchCurrencyDataQuery } from "@store/currencyApi";
 import * as S from "./styles";
 
 function LastUpdate() {
-  const { data, error, isLoading, refetch } = useFetchCurrencyDataQuery();
+  const { data, error, isLoading, refetch } = useFetchCurrencyDataQuery(
+    undefined,
+    {
+      refetchOnMountOrArgChange: false,
+    },
+  );
 
   useEffect(() => {
     const intervalId = setInterval(refetch, MILLISECONDS_IN_A_DAY);

@@ -17,7 +17,9 @@ interface ModalProps {
 const Modal = ({ currencyData }: ModalProps) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector((state) => state.modal.isOpen);
-  const { data: quotes = {} } = useFetchCurrencyDataQuery();
+  const { data: quotes = {} } = useFetchCurrencyDataQuery(undefined, {
+    refetchOnMountOrArgChange: false,
+  });
   const [amount, setAmount] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("");
   const [result, setResult] = useState<string | null>(null);

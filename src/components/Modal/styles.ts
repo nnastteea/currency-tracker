@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const BACKGROUND_COLOR = "rgba(0, 0, 0, 0.4)";
-const MARGIN = 10;
-const PADDING = 8;
-const WIDTH1 = 105;
-const WIDTH2 = 95;
-const WIDTH3 = 350;
+const CONTENT_MARGIN = 10;
+const INPUT_PADDING = 8;
+const CALCULATE_BUTTON_WIDTH = 105;
+const CONTENT_WIDTH = 95;
+const MODAL_WIDTH_WIDTH = 350;
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -27,7 +27,7 @@ export const ModalContainer = styled.div`
   width: ${({ theme }) => theme.sizes.xl6}px;
 
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
-    width: ${WIDTH3}px;
+    width: ${MODAL_WIDTH_WIDTH}px;
   }
   @media (max-width: ${({ theme }) => theme.sizes.xl8}px) {
     width: ${({ theme }) => theme.sizes.xl5}px;
@@ -49,9 +49,9 @@ export const Title = styled.h2`
 `;
 
 export const Content = styled.div`
-  margin-top: ${MARGIN}px;
+  margin-top: ${CONTENT_MARGIN}px;
   color: ${({ theme }) => theme.colors.white};
-  width: ${WIDTH2}%;
+  width: ${CONTENT_WIDTH}%;
 `;
 
 export const InputContainer = styled.div`
@@ -65,29 +65,29 @@ export const InputContainer = styled.div`
 
 export const Input = styled.input`
   width: ${({ theme }) => theme.sizes.xl3}%;
-  padding: ${PADDING}px;
-  margin-bottom: ${MARGIN}px;
+  padding: ${INPUT_PADDING}px;
+  margin-bottom: ${CONTENT_MARGIN}px;
   border: 1px solid ${({ theme }) => theme.colors.gray};
   border-radius: ${({ theme }) => theme.sizes.xs7}px;
 `;
 
 export const Select = styled.select`
-  width: ${WIDTH1}%;
-  padding: ${PADDING}px;
+  width: ${CALCULATE_BUTTON_WIDTH}%;
+  padding: ${INPUT_PADDING}px;
   border: 1px solid ${({ theme }) => theme.colors.gray};
   border-radius: ${({ theme }) => theme.sizes.xs7}px;
 `;
 
 export const CalculateButton = styled.button`
-  width: ${WIDTH1}%;
-  padding: ${PADDING}px;
+  width: ${CALCULATE_BUTTON_WIDTH}%;
+  padding: ${INPUT_PADDING}px;
   background: ${({ theme }) => theme.colors.limeGreen};
   color: black;
   font-size: ${({ theme }) => theme.fontSizes.extraSmall}px;
   border: none;
   border-radius: ${({ theme }) => theme.sizes.xs7}px;
   cursor: pointer;
-  margin-top: ${MARGIN}px;
+  margin-top: ${CONTENT_MARGIN}px;
   transition: 0.5s ease;
 
   &:hover {

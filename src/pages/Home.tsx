@@ -21,7 +21,13 @@ export interface CurrencyCard {
 }
 
 function Home() {
-  const { data: quotes = {}, isLoading, error } = useFetchCurrencyDataQuery();
+  const {
+    data: quotes = {},
+    isLoading,
+    error,
+  } = useFetchCurrencyDataQuery(undefined, {
+    refetchOnMountOrArgChange: false,
+  });
 
   const processedQuotes = defaultQuotes.map((quote) => {
     const quoteData = quotes[quote.abbreviation];

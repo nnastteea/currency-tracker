@@ -16,6 +16,8 @@ const config: Configuration = {
       "@assets": path.resolve("./src/assets"),
       "@constants": path.resolve("./src/constants"),
       "@store": path.resolve("./src/store"),
+      "@observer": path.resolve("./src/observer"),
+      "@helpers": path.resolve("./src/helpers"),
     },
   },
   module: {
@@ -43,7 +45,12 @@ const config: Configuration = {
       },
       {
         test: /\.svg$/,
-        use: "file-loader",
+        use: [
+          {
+            loader: "@svgr/webpack",
+          },
+          "file-loader",
+        ],
       },
       {
         test: /\.png$/,

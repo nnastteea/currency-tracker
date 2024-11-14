@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const PADDING1 = 0;
-const PADDING2 = 30;
-const PADDING3 = 40;
-const PADDING4 = 60;
-const PADDING5 = 100;
+const PADDING_HORIZONTAL_NONE = 0;
+const PADDING_SMALL = 30;
+const PADDING_MEDIUM = 40;
+const PADDING_LARGE = 60;
+const PADDING_EXTRA_LARGE = 100;
 
 export const BlockContainer = styled.div`
   display: flex;
@@ -30,14 +30,14 @@ export const Line = styled.div`
 `;
 
 export const BlockWithCardsContainer = styled.div`
-  padding: ${PADDING1} ${PADDING5}px;
+  padding: ${PADDING_HORIZONTAL_NONE} ${PADDING_EXTRA_LARGE}px;
   @media (max-width: ${({ theme }) => theme.sizes.xl10}px) {
-    padding: ${PADDING1} ${PADDING4}px;
+    padding: ${PADDING_HORIZONTAL_NONE} ${PADDING_LARGE}px;
   }
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
-    padding: ${PADDING1} ${PADDING2}px;
+    padding: ${PADDING_HORIZONTAL_NONE} ${PADDING_SMALL}px;
   }
   @media (max-width: ${({ theme }) => theme.sizes.xl18}px) {
-    padding: ${PADDING1} ${PADDING3}px;
+    padding: ${PADDING_HORIZONTAL_NONE} ${PADDING_MEDIUM}px;
   }
 `;

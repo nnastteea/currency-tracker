@@ -48,7 +48,7 @@ function Header() {
           <Switch />
         </div>
       </S.HeaderContainer>
-      <S.HeaderImage src={HeaderImg} />
+      <S.HeaderImage src={HeaderImg} alt="header image" />
     </>
   );
 }

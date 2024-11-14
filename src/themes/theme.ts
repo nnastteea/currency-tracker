@@ -1,4 +1,5 @@
 const fontSizes = {
+  extraSmall3: 14,
   extraSmall2: 16,
   extraSmall: 18,
   small: 20,

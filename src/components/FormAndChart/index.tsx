@@ -27,16 +27,9 @@ class SelectCurrency extends Component<Props, State> {
     startDate.setDate(today.getDate() - 10);
 
     return {
-      startDate: this.formatDate(startDate),
-      endDate: this.formatDate(today),
+      startDate: formatDate(startDate),
+      endDate: formatDate(today),
     };
-  };
-
-  formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
   };
 
   componentDidMount() {
@@ -105,8 +98,8 @@ class SelectCurrency extends Component<Props, State> {
           );
 
           this.setState({
-            startDate: this.formatDate(actualStartDate),
-            endDate: this.formatDate(actualEndDate),
+            startDate: formatDate(actualStartDate),
+            endDate: formatDate(actualEndDate),
             showMessage: false,
             errorMessage: "",
           });
@@ -137,7 +130,7 @@ class SelectCurrency extends Component<Props, State> {
     const { selectedCurrency, startDate, endDate, showMessage, errorMessage } =
       this.state;
     const { currencyData, loading, error } = this.props;
-    const today = this.formatDate(new Date());
+    const today = formatDate(new Date());
 
     return (
       <S.SelectCurrencyContainer>

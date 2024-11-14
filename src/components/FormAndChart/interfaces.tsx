@@ -12,6 +12,7 @@ export interface State {
   startDate: string;
   endDate: string;
   showMessage: boolean;
+  isModalOpen: boolean;
 }
 
 export interface Props {

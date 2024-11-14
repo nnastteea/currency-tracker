@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { quotes } from "@constants/Constants";
+import Observer from "@observer/Observer";
 import { fetchCurrencyHistory } from "@store/currencySlice";
 
+import ModalForChart from "../ModalForChart";
 import TimelineChart from "../TimelineChart";
 import { CurrencyRate, Props, State } from "./interfaces";
 import * as S from "./styles";
@@ -13,18 +15,38 @@ class SelectCurrency extends Component<Props, State> {
     startDate: "",
     endDate: "",
     showMessage: true,
+    isModalOpen: false,
   };
 
-  componentDidMount() {
+  setInitialDates = () => {
     const today = new Date();
     const startDate = new Date(today);
     startDate.setDate(today.getDate() - 10);
-    const endDate = today;
-    const formattedStartDate = startDate.toISOString().split("T")[0];
-    const formattedEndDate = endDate.toISOString().split("T")[0];
 
-    this.setState({ startDate: formattedStartDate, endDate: formattedEndDate });
+    return {
+      startDate: this.formatDate(startDate),
+      endDate: this.formatDate(today),
+    };
+  };
+
+  formatDate = (date: Date) => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  componentDidMount() {
+    const { startDate, endDate } = this.setInitialDates();
+    this.setState({ startDate, endDate });
     this.props.fetchCurrencyHistory({ currencyCode: "ARS", dayCount: 10 });
+    Observer.subscribe("openModal", this.handleOpenModal);
+    Observer.subscribe("closeModal", this.handleCloseModal);
+  }
+
+  componentWillUnmount() {
+    Observer.unsubscribe("openModal", this.handleOpenModal);
+    Observer.unsubscribe("closeModal", this.handleCloseModal);
   }
 
   handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -39,45 +61,65 @@ class SelectCurrency extends Component<Props, State> {
     this.setState({ endDate: event.target.value });
   };
 
+  handleOpenModal = () => {
+    this.setState({ isModalOpen: true });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ isModalOpen: false });
+  };
+
   handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const { selectedCurrency, startDate, endDate } = this.state;
+    const { selectedCurrency } = this.state;
+    let { startDate, endDate } = this.state;
+
+    if (!startDate || !endDate) {
+      const initialDates = this.setInitialDates();
+      startDate = startDate || initialDates.startDate;
+      endDate = endDate || initialDates.endDate;
+    }
 
     if (selectedCurrency && startDate && endDate) {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      const start = new Date(startDate + "T00:00:00");
+      const end = new Date(endDate + "T23:59:59");
+
       const timeDifference = end.getTime() - start.getTime();
       const dayCount = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-      if (dayCount > 0) {
-        const action = await this.props.fetchCurrencyHistory({
-          currencyCode: selectedCurrency,
-          dayCount,
-        });
+      const action = await this.props.fetchCurrencyHistory({
+        currencyCode: selectedCurrency,
+        dayCount,
+      });
 
-        if (fetchCurrencyHistory.fulfilled.match(action)) {
-          const { currencyData } = action.payload;
+      if (fetchCurrencyHistory.fulfilled.match(action)) {
+        const { currencyData } = action.payload;
 
-          if (currencyData && currencyData.length > 0) {
-            const actualStartDate = currencyData[0].time_period_start;
-            const actualEndDate =
-              currencyData[currencyData.length - 1].time_period_start;
+        if (currencyData && currencyData.length > 0) {
+          const actualStartDate = new Date(currencyData[0].time_period_start);
+          const actualEndDate = new Date(
+            currencyData[currencyData.length - 1].time_period_start,
+          );
 
-            this.setState({
-              startDate: actualStartDate.split("T")[0],
-              endDate: actualEndDate.split("T")[0],
-              showMessage: false,
-            });
-          } else {
-            alert(
-              "No data available for the selected currency and date range.",
-            );
+          this.setState({
+            startDate: this.formatDate(actualStartDate),
+            endDate: this.formatDate(actualEndDate),
+            showMessage: false,
+          });
+
+          const actualDayCount = Math.ceil(
+            (actualEndDate.getTime() - actualStartDate.getTime()) /
+              (1000 * 3600 * 24),
+          );
+
+          if (actualDayCount === 10) {
+            Observer.notify("openModal");
           }
         } else {
-          alert("Failed to fetch currency history.");
+          alert("No data available for the selected currency and date range.");
         }
       } else {
-        alert("End date must be after start date!");
+        alert("Failed to fetch currency history.");
       }
     } else {
       alert("Please fill all fields!");
@@ -87,6 +129,7 @@ class SelectCurrency extends Component<Props, State> {
   render() {
     const { selectedCurrency, startDate, endDate, showMessage } = this.state;
     const { currencyData, loading, error } = this.props;
+    const today = this.formatDate(new Date());
 
     return (
       <S.SelectCurrencyContainer>
@@ -108,12 +151,14 @@ class SelectCurrency extends Component<Props, State> {
               value={startDate}
               onChange={this.handleStartDateChange}
               placeholder="Start Date"
+              max={today}
             />
             <S.DateInput
               type="date"
               value={endDate}
               onChange={this.handleEndDateChange}
               placeholder="End Date"
+              max={today}
             />
           </div>
           <S.BuildButton type="submit">Create a chart</S.BuildButton>
@@ -121,7 +166,7 @@ class SelectCurrency extends Component<Props, State> {
         <div>
           {showMessage && (
             <S.InfoPHeader>
-              Argentine Perso exchange rate for the last 10 days
+              Argentine Peso exchange rate for the last 10 days
               <br />
               (USD is taken as the base currency)
             </S.InfoPHeader>
@@ -142,6 +187,10 @@ class SelectCurrency extends Component<Props, State> {
             />
           )}
         </div>
+        <ModalForChart
+          isOpen={this.state.isModalOpen}
+          handleClose={this.handleCloseModal}
+        />
       </S.SelectCurrencyContainer>
     );
   }

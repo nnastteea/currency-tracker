@@ -16,7 +16,6 @@ import {
 } from "chartjs-chart-financial";
 ChartJS.register(CandlestickController, CandlestickElement);
 
-import ModalForChart from "../ModalForChart";
 import { Props, State } from "./interfaces";
 
 const WHITE_COLOR = "#fff";
@@ -30,15 +29,12 @@ class TimelineChart extends Component<Props, State> {
     high: 0,
     low: 0,
     close: 0,
-    isModalOpen: false,
     data: this.props.currencyData,
     windowWidth: window.innerWidth,
   };
 
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
-    Observer.subscribe("openModal", this.handleOpenModal);
-    Observer.subscribe("closeModal", this.handleCloseModal);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -46,12 +42,6 @@ class TimelineChart extends Component<Props, State> {
       console.log("New currency data received:", this.props.currencyData);
       this.setState({ data: this.props.currencyData });
     }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.handleResize);
-    Observer.unsubscribe("openModal", this.handleOpenModal);
-    Observer.unsubscribe("closeModal", this.handleCloseModal);
   }
 
   handleChartClick = (event: any) => {
@@ -98,23 +88,13 @@ class TimelineChart extends Component<Props, State> {
       };
       this.setState({
         data: updatedData,
-        isModalOpen: true,
         selectedItem: null,
       });
-      Observer.notify("openModal");
     }
   };
 
   handleResize = () => {
     this.setState({ windowWidth: window.innerWidth });
-  };
-
-  handleOpenModal = () => {
-    this.setState({ isModalOpen: true });
-  };
-
-  handleCloseModal = () => {
-    this.setState({ isModalOpen: false });
   };
 
   render() {
@@ -239,10 +219,6 @@ class TimelineChart extends Component<Props, State> {
         <S.ChartContainer>
           <Chart type="candlestick" data={chartData} options={options} />
         </S.ChartContainer>
-        <ModalForChart
-          isOpen={this.state.isModalOpen}
-          handleClose={this.handleCloseModal}
-        />
       </S.Container>
     );
   }

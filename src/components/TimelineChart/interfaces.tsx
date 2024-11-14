@@ -18,7 +18,6 @@ export interface State {
   high: number;
   low: number;
   close: number;
-  isModalOpen: boolean;
   data: ChartDataItem[];
   windowWidth: number;
 }

@@ -4,14 +4,3 @@ export interface CurrencyData {
     value: number;
   };
 }
-
-export interface CurrencyState {
-  data: Array<{ time: string; rate: number }>;
-  loading: boolean;
-  error: string | null;
-}
-
-export interface CurrencyDataItem {
-  time_period_start: string;
-  rate_close: number;
-}

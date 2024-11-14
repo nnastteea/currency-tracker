@@ -100,3 +100,10 @@ export const InfoPHeader = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.extrasmall}px;
   margin-top: 30px;
 `;
+
+export const ErrorMessage = styled.div`
+  color: ${({ theme }) => theme.colors.lightGray};
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSizes.extraSmall}px;
+  margin-top: 15px;
+`;

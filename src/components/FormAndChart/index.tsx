@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { quotes } from "@constants/Constants";
+import { formatDate } from "@helpers/formatDate";
 import Observer from "@observer/Observer";
 import { fetchCurrencyHistory } from "@store/currencySlice";
+import { RootState } from "@store/store";
 
 import ModalForChart from "../ModalForChart";
 import TimelineChart from "../TimelineChart";
@@ -16,6 +18,7 @@ class SelectCurrency extends Component<Props, State> {
     endDate: "",
     showMessage: true,
     isModalOpen: false,
+    errorMessage: "",
   };
 
   setInitialDates = () => {
@@ -105,6 +108,7 @@ class SelectCurrency extends Component<Props, State> {
             startDate: this.formatDate(actualStartDate),
             endDate: this.formatDate(actualEndDate),
             showMessage: false,
+            errorMessage: "",
           });
 
           const actualDayCount = Math.ceil(
@@ -116,18 +120,22 @@ class SelectCurrency extends Component<Props, State> {
             Observer.notify("openModal");
           }
         } else {
-          alert("No data available for the selected currency and date range.");
+          this.setState({
+            errorMessage:
+              "No data available for the selected currency and date range.",
+          });
         }
       } else {
-        alert("Failed to fetch currency history.");
+        this.setState({ errorMessage: "Failed to fetch currency history." });
       }
     } else {
-      alert("Please fill all fields!");
+      this.setState({ errorMessage: "Please fill all fields!" });
     }
   };
 
   render() {
-    const { selectedCurrency, startDate, endDate, showMessage } = this.state;
+    const { selectedCurrency, startDate, endDate, showMessage, errorMessage } =
+      this.state;
     const { currencyData, loading, error } = this.props;
     const today = this.formatDate(new Date());
 
@@ -164,6 +172,7 @@ class SelectCurrency extends Component<Props, State> {
           <S.BuildButton type="submit">Create a chart</S.BuildButton>
         </S.FormInputInfo>
         <div>
+          {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
           {showMessage && (
             <S.InfoPHeader>
               Argentine Peso exchange rate for the last 10 days
@@ -196,7 +205,7 @@ class SelectCurrency extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
   currencyData: state.currency.history,
   loading: state.currency.status === "loading",
   error: state.currency.error,

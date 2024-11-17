@@ -6,7 +6,7 @@ export const LastUpdateContainer = styled.div`
   align-items: center;
   color: ${({ theme }) => theme.colors.white};
   padding: ${({ theme }) => theme.sizes.xs4}px;
-  font-size: ${({ theme }) => theme.sizes.xs4}px;
+  font-size: ${({ theme }) => theme.fontSizes.small}px;
 
   @media (max-width: ${({ theme }) => theme.sizes.xl10}px) {
     font-size: ${({ theme }) => theme.fontSizes.extraSmall}px;

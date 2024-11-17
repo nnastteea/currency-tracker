@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-const PADDING_VERTICAL = 10;
+const INDENTS_VERTICAL = 10;
 const INPUT_CONTAINER_PADDING_LARGE = 150;
 const INPUT_CONTAINER_PADDING_HORIZONTAL = 190;
 const CHART_WIDTH_LARGE = 80;
 const CHART_WIDTH_MEDIUM = 90;
 const CHART_WIDTH_SMALL = 95;
-const BUTTON_WIDTH = 165;
+const BUTTON_WIDTH = 190;
 const SUBMIT_BUTTON_WIDTH = 350;
 
 export const Container = styled.div`
@@ -17,7 +17,7 @@ export const Container = styled.div`
 `;
 
 export const InputContainer = styled.div`
-  padding: ${PADDING_VERTICAL}px ${INPUT_CONTAINER_PADDING_HORIZONTAL}px;
+  padding: ${INDENTS_VERTICAL}px ${INPUT_CONTAINER_PADDING_HORIZONTAL}px;
   font-size: ${({ theme }) => theme.fontSizes.small}px;
   display: flex;
   margin-top: ${({ theme }) => theme.sizes.xs4}px;
@@ -27,7 +27,7 @@ export const InputContainer = styled.div`
   text-align: center;
 
   @media (max-width: ${({ theme }) => theme.sizes.xl11}px) {
-    padding: ${PADDING_VERTICAL}px ${INPUT_CONTAINER_PADDING_LARGE}px;
+    padding: ${INDENTS_VERTICAL}px ${INPUT_CONTAINER_PADDING_LARGE}px;
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
@@ -80,8 +80,12 @@ export const ChartContainer = styled.div`
 `;
 
 export const InputField = styled.input`
+  width: 250px;
   margin-left: ${({ theme }) => theme.sizes.xs4}px;
   padding: ${({ theme }) => theme.sizes.xs6}px;
+  @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
+    width: 100px;
+  }
 `;
 
 export const InfoP = styled.p`
@@ -89,5 +93,14 @@ export const InfoP = styled.p`
 `;
 
 export const LabelContainer = styled.label`
-  max-width: ${({ theme }) => theme.sizes.xl7}px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: ${SUBMIT_BUTTON_WIDTH}px;
+  margin-bottom: ${INDENTS_VERTICAL}px;
+
+  @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
+    font-size: ${({ theme }) => theme.fontSizes.small}px;
+    width: ${BUTTON_WIDTH}px;
+  }
 `;

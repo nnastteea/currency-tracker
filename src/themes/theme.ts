@@ -45,6 +45,8 @@ const colors = {
   lightGray: "#898989",
   BlueGray: "#a7b2c3",
   DarkGray: "#202025",
+  DarkGray2: "#1B2028",
+  DarkGray3: "#0e1115",
 };
 export const themes = {
   colors,

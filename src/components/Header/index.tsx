@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import HeaderImg from "@assets/Header.svg";
 import Logo from "@assets/Logo.svg";
 import Menu from "@assets/Menu.svg";
+import routes from "@routes/routes";
 
 import Switch from "../SwitchButton";
 import * as S from "./styles";
@@ -28,19 +29,19 @@ function Header() {
             </S.MenuImgContainer>
             {isMenuOpen && (
               <S.DropDownMenu>
-                <S.DropDownItem>Home</S.DropDownItem>
-                <S.DropDownItem>TimeLine</S.DropDownItem>
-                <S.DropDownItem>Bank card</S.DropDownItem>
-                <S.DropDownItem>Contact</S.DropDownItem>
+                <S.DropDownItem to={routes.HOME}>Home</S.DropDownItem>
+                <S.DropDownItem to={routes.TIMELINE}>TimeLine</S.DropDownItem>
+                <S.DropDownItem to={routes.CARDBANK}>Bank card</S.DropDownItem>
+                <S.DropDownItem to={routes.HOME}>Contact</S.DropDownItem>
               </S.DropDownMenu>
             )}
           </>
         ) : (
           <S.NavContainer>
-            <S.MenuItem>Home</S.MenuItem>
-            <S.MenuItem>TimeLine</S.MenuItem>
-            <S.MenuItem>Bank card</S.MenuItem>
-            <S.MenuItem>Contact</S.MenuItem>
+            <S.MenuItem to={routes.HOME}>Home</S.MenuItem>
+            <S.MenuItem to={routes.TIMELINE}>TimeLine</S.MenuItem>
+            <S.MenuItem to={routes.CARDBANK}>Bank card</S.MenuItem>
+            <S.MenuItem to={routes.HOME}>Contact</S.MenuItem>
           </S.NavContainer>
         )}
 

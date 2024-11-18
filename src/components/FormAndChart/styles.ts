@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const DEFAULT_PADDING = 8;
 const DEFAULT_MARGIN = 10;
-const SELECT_WIDTH = 210;
+const SELECT_WIDTH = 220;
 const BUTTON_WIDTH = 350;
 
 export const SelectCurrency = styled.select`
@@ -85,6 +85,7 @@ export const DateInput = styled.input`
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: ${({ theme }) => theme.sizes.xs7}px;
     padding: ${({ theme }) => theme.sizes.xs9}px;
+    margin-left: 5px;
   }
 `;
 export const InfoP = styled.p`

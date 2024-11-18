@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const LOGO_PADDING_HORIZONTAL = 0;
@@ -35,7 +36,9 @@ export const NavContainer = styled.nav`
   }
 `;
 
-export const MenuItem = styled.a`
+export const MenuItem = styled(NavLink)`
+  color: ${({ theme }) => theme.colors.white};
+  transition: 0.5s ease;
   cursor: pointer;
   text-decoration: none;
   padding: ${HEADER_VERTICAL_PADDING}px
@@ -48,6 +51,7 @@ export const MenuItem = styled.a`
   }
   &.active {
     transform: scale(1.07);
+    color: ${({ theme }) => theme.colors.lightGray};
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl10}px) {
@@ -94,13 +98,18 @@ export const DropDownMenu = styled.div`
   background: ${({ theme }) => theme.colors.black};
 `;
 
-export const DropDownItem = styled.a`
+export const DropDownItem = styled(NavLink)`
   padding: ${HEADER_VERTICAL_PADDING}px ${HEADER_HORIZONTAL_PADDING_LARGE}px;
+  cursor: pointer;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.white};
+  transition: 0.5s ease;
   &:hover {
     transform: scale(1.05);
   }
   &.active {
     transform: scale(1.07);
+    color: ${({ theme }) => theme.colors.lightGray};
   }
 `;
 

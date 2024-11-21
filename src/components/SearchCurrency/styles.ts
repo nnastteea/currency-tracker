@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const FONT_WEIGHT = 600;
+const VERTICAL_INDENTS = 30;
 const INDENTS_TOP = 10;
 const WIDTH_INPUT = 90;
 const CONTAINER_WIDTH_INPUT = 350;
@@ -12,7 +13,8 @@ export const ContainerSearch = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 30px;
+  padding-bottom: ${VERTICAL_INDENTS}px;
+  margin: ${VERTICAL_INDENTS}px 0;
 `;
 
 export const SearchCurrencyHeader = styled.p`

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Chart } from "react-chartjs-2";
-import Observer from "@observer/Observer";
 import { Chart as ChartJS, ChartOptions, registerables } from "chart.js";
 import { enUS } from "date-fns/locale";
 

@@ -4,11 +4,24 @@ import { quotes } from "@constants/Constants";
 
 import * as S from "./styles";
 
-class SearchCurrency extends React.Component {
-  state = {
+interface SearchCurrencyProps {
+  onCurrencySelect: (currency: string) => void;
+}
+
+interface SearchCurrencyState {
+  query: string;
+  filteredCurrencies: string[];
+}
+
+class SearchCurrency extends React.Component<
+  SearchCurrencyProps,
+  SearchCurrencyState
+> {
+  state: SearchCurrencyState = {
     query: "",
     filteredCurrencies: [],
   };
+
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     this.setState({ query: inputValue });
@@ -37,6 +50,7 @@ class SearchCurrency extends React.Component {
 
   handleCurrencySelect = (currency: string) => {
     this.setState({ query: currency, filteredCurrencies: [] });
+    this.props.onCurrencySelect(currency);
   };
 
   render() {

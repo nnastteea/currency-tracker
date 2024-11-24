@@ -32,7 +32,7 @@ function Header() {
                 <S.DropDownItem to={routes.HOME}>Home</S.DropDownItem>
                 <S.DropDownItem to={routes.TIMELINE}>TimeLine</S.DropDownItem>
                 <S.DropDownItem to={routes.CARDBANK}>Bank card</S.DropDownItem>
-                <S.DropDownItem to={routes.HOME}>Contact</S.DropDownItem>
+                <S.DropDownItem to={routes.CONTACT}>Contact</S.DropDownItem>
               </S.DropDownMenu>
             )}
           </>
@@ -41,7 +41,7 @@ function Header() {
             <S.MenuItem to={routes.HOME}>Home</S.MenuItem>
             <S.MenuItem to={routes.TIMELINE}>TimeLine</S.MenuItem>
             <S.MenuItem to={routes.CARDBANK}>Bank card</S.MenuItem>
-            <S.MenuItem to={routes.HOME}>Contact</S.MenuItem>
+            <S.MenuItem to={routes.CONTACT}>Contact</S.MenuItem>
           </S.NavContainer>
         )}
 

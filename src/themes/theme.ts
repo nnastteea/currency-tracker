@@ -42,6 +42,7 @@ const colors = {
   green: "#00ce2c",
   limeGreen: "#aedf23",
   limeGreen2: "#a3dc00",
+  limeGreen3: "#7ddd38",
   lightGray: "#898989",
   BlueGray: "#a7b2c3",
   DarkGray: "#202025",

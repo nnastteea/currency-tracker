@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useTheme } from "@hooks/useTheme";
 import routes from "@routes/routes";
 import { ThemeProvider } from "styled-components";
 
@@ -8,7 +9,6 @@ import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Timeline from "./pages/Timeline";
 import { themes } from "./themes/theme";
-import { useTheme } from "./ThemeProvider";
 
 function App() {
   const { currentTheme } = useTheme();

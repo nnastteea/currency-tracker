@@ -6,6 +6,10 @@ const fontSizes = {
   medium: 22,
   large: 25,
   extraLarge: 26,
+  extraLarge2: 28,
+  extraLarge3: 32,
+  extraLarge4: 44,
+  extraLarge5: 54,
 };
 
 const sizes = {

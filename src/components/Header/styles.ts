@@ -82,9 +82,13 @@ export const LogoContainer = styled.div`
 `;
 
 export const MenuImgContainer = styled.div`
-  img {
-    width: ${({ theme }) => theme.sizes.xl}px;
-    height: ${({ theme }) => theme.sizes.l}px;
+  color: ${({ theme }) => theme.colors.white};
+  width: ${({ theme }) => theme.sizes.xl}px;
+  height: ${({ theme }) => theme.sizes.xl}px;
+
+  svg {
+    width: 100%;
+    height: auto;
   }
 `;
 

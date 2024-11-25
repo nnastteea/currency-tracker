@@ -20,6 +20,7 @@ const config: Configuration = {
       "@helpers": path.resolve("./src/helpers"),
       "@routes": path.resolve("./src/routes"),
       "@themes": path.resolve("./src/themes"),
+      "@hooks": path.resolve("./src/hooks"),
     },
   },
   module: {

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import HeaderImg from "@assets/Header2.svg";
 import Logo from "@assets/Logo.svg";
-import Menu from "@assets/Menu.svg";
+import { ReactComponent as Menu } from "@assets/Menu.svg";
+import { useMediaQuery } from "@hooks/useMediaQuery";
 import routes from "@routes/routes";
 
+// import HeaderImg from "@assets/Header2.svg";
+import ModsenCurrencyTracker from "../HeaderImage";
 import Switch from "../SwitchButton";
 import * as S from "./styles";
-import { useMediaQuery } from "./useMediaQuery";
 
 function Header() {
   const { isMobile } = useMediaQuery();
@@ -25,7 +26,7 @@ function Header() {
         {isMobile ? (
           <>
             <S.MenuImgContainer onClick={openMenu}>
-              <img src={Menu} alt="menu" />
+              <Menu alt="menu" />
             </S.MenuImgContainer>
             {isMenuOpen && (
               <S.DropDownMenu>
@@ -49,7 +50,8 @@ function Header() {
           <Switch />
         </div>
       </S.HeaderContainer>
-      <S.HeaderImage src={HeaderImg} alt="header image" />
+      {/* <S.HeaderImage src={HeaderImg} alt="header image" /> */}
+      <ModsenCurrencyTracker />
     </>
   );
 }

@@ -7,12 +7,14 @@ interface ThemeContextType {
   changeTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(
+  undefined,
+);
+
+const storedTheme = (localStorage.getItem("theme") as "light" | "dark") || null;
+const initialTheme = storedTheme === "light" ? themes.light : themes.dark;
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const storedTheme =
-    (localStorage.getItem("theme") as "light" | "dark") || null;
-  const initialTheme = storedTheme === "light" ? themes.light : themes.dark;
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
   const changeTheme = () => {
     toggleTheme(currentTheme, setCurrentTheme);
@@ -22,14 +24,6 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </ThemeContext.Provider>
   );
-};
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be with value");
-  }
-  return context;
 };
 
 export default ThemeProvider;

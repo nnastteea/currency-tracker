@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useTheme } from "@hooks/useTheme";
 import { themes } from "@themes/theme";
 
-import { useTheme } from "../../ThemeProvider";
 import * as S from "./styles";
 
 function Switch() {

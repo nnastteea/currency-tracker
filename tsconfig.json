@@ -20,7 +20,8 @@
       "@observer/*": ["observer/*"],
       "@helpers/*": ["helpers/*"],
       "@routes/*": ["routes/*"],
-      "@themes/*": ["themes/*"]
+      "@themes/*": ["themes/*"],
+      "@hooks/*": ["hooks/*"]
     }
   },
   "include": ["src/**/*", "src/@types/declarations.d.ts"], // Включает все файлы в директории src и ее поддиректориях

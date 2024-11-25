@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import HeaderImg from "@assets/Header.svg";
+import HeaderImg from "@assets/Header2.svg";
 import Logo from "@assets/Logo.svg";
 import Menu from "@assets/Menu.svg";
 import routes from "@routes/routes";

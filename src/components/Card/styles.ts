@@ -12,7 +12,7 @@ export const CardContainer = styled.div`
   gap: ${({ theme }) => theme.sizes.xs4}px;
   padding: ${CARD_PADDING_TOP_BOTTOM}px ${CARD_PADDING_LEFT_RIGHT}px;
   background-color: ${({ theme }) => theme.colors.DarkGray};
-  border: 1px solid ${({ theme }) => theme.colors.gray};
+  border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: ${({ theme }) => theme.sizes.xs6}px;
   margin: ${CARD_PADDING_LEFT_RIGHT}px ${CARD_MARGIN_HORIZONTAL};
   cursor: pointer;

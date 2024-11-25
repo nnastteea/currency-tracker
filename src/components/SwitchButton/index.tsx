@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { themes } from "@themes/theme";
 
+import { useTheme } from "../../ThemeProvider";
 import * as S from "./styles";
 
 function Switch() {
-  const [isSwitch, setIsSwitch] = useState(false);
+  const { currentTheme, changeTheme } = useTheme();
+  const [isSwitch, setIsSwitch] = useState(currentTheme === themes.light);
 
   const handleSwitch = () => {
     setIsSwitch((prevState) => !prevState);
+    changeTheme();
   };
 
   return (

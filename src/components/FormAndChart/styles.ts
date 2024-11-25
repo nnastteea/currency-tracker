@@ -82,29 +82,29 @@ export const DateInput = styled.input`
 
   &::-webkit-calendar-picker-indicator {
     cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: white;
     border-radius: ${({ theme }) => theme.sizes.xs7}px;
-    padding: ${({ theme }) => theme.sizes.xs9}px;
-    margin-left: 5px;
+    padding: ${({ theme }) => theme.sizes.xs10}px;
+    margin-left: ${({ theme }) => theme.sizes.xs6}px;
   }
 `;
 export const InfoP = styled.p`
   color: ${({ theme }) => theme.colors.white};
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.small}px;
-  margin-top: 30px;
+  margin-top: ${({ theme }) => theme.sizes.xs2}px;
 `;
 
 export const InfoPHeader = styled.p`
   color: ${({ theme }) => theme.colors.white};
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.extrasmall}px;
-  margin-top: 30px;
+  margin-top: ${({ theme }) => theme.sizes.xs2}px;
 `;
 
 export const ErrorMessage = styled.div`
   color: ${({ theme }) => theme.colors.lightGray};
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.extraSmall}px;
-  margin-top: 15px;
+  margin-top: ${({ theme }) => theme.sizes.xs5}px;
 `;

@@ -1,3 +1,5 @@
+import { themes } from "@themes/theme";
+
 export interface ChartDataItem {
   time: string;
   open: number;

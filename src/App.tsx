@@ -8,10 +8,12 @@ import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Timeline from "./pages/Timeline";
 import { themes } from "./themes/theme";
+import { useTheme } from "./ThemeProvider";
 
 function App() {
+  const { currentTheme } = useTheme();
   return (
-    <ThemeProvider theme={themes}>
+    <ThemeProvider theme={currentTheme}>
       <Router>
         <Routes>
           <Route path={routes.HOME} element={<Home />} />

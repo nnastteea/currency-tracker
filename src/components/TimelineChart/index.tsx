@@ -17,9 +17,8 @@ ChartJS.register(CandlestickController, CandlestickElement);
 
 import { Props, State } from "./interfaces";
 
-const WHITE_COLOR = "#fff";
-const GRAY_COLOR = "rgba(255, 255, 255, 0.2)";
-const BLACK_COLOR = "rgba(255, 255, 255, 1)";
+const WHITE_COLOR = "#9E9E9E";
+const GRAY_COLOR = "rgba(158, 158, 158, 0.5)";
 
 class TimelineChart extends Component<Props, State> {
   state: State = {
@@ -121,7 +120,7 @@ class TimelineChart extends Component<Props, State> {
         {
           label: "Currency Prices",
           data: dataPoints,
-          borderColor: BLACK_COLOR,
+          borderColor: WHITE_COLOR,
           borderWidth: 1,
           maxBarThickness: 20,
         },

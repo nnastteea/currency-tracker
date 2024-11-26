@@ -37,6 +37,10 @@ export const SearchCurrencyInput = styled.input`
   font-size: ${({ theme }) => theme.fontSizes.extraSmall2}px;
   color: ${({ theme }) => theme.colors.white};
   outline: none;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.whiteAndGray};
+  }
 `;
 
 export const ContainerSearchInput = styled.div`
@@ -58,7 +62,7 @@ export const IconContainer = styled.div`
   svg {
     width: ${({ theme }) => theme.sizes.xs3}px;
     height: auto;
-    fill: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.whiteAndGray};
   }
 
   @media (max-width: ${({ theme }) => theme.sizes.xl6}px) {

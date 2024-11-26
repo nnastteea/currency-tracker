@@ -81,13 +81,6 @@ export const LogoContainer = styled.div`
   }
 `;
 
-export const MenuImgContainer = styled.div`
-  img {
-    width: ${({ theme }) => theme.sizes.xl}px;
-    height: ${({ theme }) => theme.sizes.l}px;
-  }
-`;
-
 export const DropDownMenu = styled.div`
   display: flex;
   flex-direction: column;
@@ -118,4 +111,27 @@ export const HeaderImage = styled.img`
   padding: ${LOGO_PADDING_HORIZONTAL} ${HEADER_VERTICAL_PADDING}px;
   height: auto;
   object-fit: cover;
+`;
+
+export const MenuImgContainer = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Burger = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: ${({ theme }) => theme.sizes.xs2}px;
+  height: ${({ theme }) => theme.sizes.xs4}px;
+`;
+
+export const Line = styled.div`
+  height: ${({ theme }) => theme.sizes.xs8}px;
+  width: ${({ theme }) => theme.sizes.xl3}%;
+  border-radius: ${({ theme }) => theme.sizes.xs6}px;
+  background-color: ${({ theme }) => theme.colors.white};
+  transition: all 0.3s ease;
 `;

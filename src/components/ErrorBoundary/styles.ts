@@ -9,11 +9,10 @@ const colors = {
 };
 
 const dimensions = {
-  bearWidth: "160px",
-  bearHeight: "185px",
-  earWidth: "100px",
-  earHeight: "125px",
-  bearBorderRadius: "100px 100px 0 0",
+  bearWidth: 160,
+  bearHeight: 185,
+  earWidth: 100,
+  earHeight: 125,
 };
 
 const FONT_SIZE = 26;
@@ -60,7 +59,7 @@ export const ErrorBear = styled.div`
   height: ${dimensions.bearHeight}px;
   position: relative;
   background: ${colors.bearBackground};
-  border-radius: ${dimensions.bearBorderRadius};
+  border-radius: 100px 100px 0 0;
   margin: 0 auto;
 
   &:after {
@@ -110,7 +109,7 @@ export const ErrorBear = styled.div`
     position: absolute;
     width: 140%;
     height: 125px;
-    left: 20%;
+    left: -20%;
     top: 0;
     background-image: radial-gradient(
         circle,

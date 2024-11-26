@@ -28,7 +28,7 @@ class ErrorBoundary extends React.Component<ErrorProps, ErrorState> {
         <>
           <S.GlobalStyle />
           <S.ErrorMessage>Something is wrong...</S.ErrorMessage>
-          <S.ErrorBear></S.ErrorBear>
+          <S.ErrorBear />
         </>
       );
     }

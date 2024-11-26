@@ -13,7 +13,7 @@ const ModsenCurrencyTracker = () => {
         </S.Subtitle>
       </S.TextSection>
       <S.DiagramContainer>
-        <img src={Diagram} />
+        <img src={Diagram} alt="diagram image" />
       </S.DiagramContainer>
     </S.Container>
   );

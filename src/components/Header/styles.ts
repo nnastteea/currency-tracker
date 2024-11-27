@@ -8,6 +8,10 @@ const HEADER_VERTICAL_PADDING = 10;
 const HEADER_HORIZONTAL_PADDING_LARGE = 30;
 const HEADER_HORIZONTAL_PADDING_EXTRA_LARGE = 40;
 
+export const WrapperHeader = styled.div`
+  overflow-x: hidden;
+`;
+
 export const HeaderContainer = styled.header`
   color: ${({ theme }) => theme.colors.white};
   display: flex;

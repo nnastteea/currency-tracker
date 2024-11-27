@@ -3,6 +3,7 @@ import { Chart } from "react-chartjs-2";
 import { Chart as ChartJS, ChartOptions, registerables } from "chart.js";
 import { enUS } from "date-fns/locale";
 
+import Loader from "../Loader";
 import * as S from "./styles";
 
 import "chartjs-adapter-date-fns";
@@ -101,7 +102,7 @@ class TimelineChart extends Component<Props, State> {
       this.state;
 
     if (loading) {
-      return <S.InfoP>Loading data...</S.InfoP>;
+      return <Loader />;
     }
 
     if (error) {

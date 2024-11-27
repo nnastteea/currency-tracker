@@ -6,6 +6,7 @@ import Observer from "@observer/Observer";
 import { fetchCurrencyHistory } from "@store/currencySlice";
 import { RootState } from "@store/store";
 
+import Loader from "../Loader";
 import ModalForChart from "../ModalForChart";
 import TimelineChart from "../TimelineChart";
 import { CurrencyRate, Props, State } from "./interfaces";
@@ -173,7 +174,7 @@ class SelectCurrency extends Component<Props, State> {
               (USD is taken as the base currency)
             </S.InfoPHeader>
           )}
-          {loading && <S.InfoP>Loading data...</S.InfoP>}
+          {loading && <Loader />}
           {error && <S.InfoP>Error: {error}</S.InfoP>}
           {currencyData.length > 0 && !loading && (
             <TimelineChart

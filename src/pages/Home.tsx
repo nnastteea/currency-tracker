@@ -10,6 +10,7 @@ import BlockWithCards from "../components/BlockWithCards";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LastUpdate from "../components/LastUpdate";
+import Loader from "../components/Loader";
 import * as S from "../GlobalStyles";
 
 export interface CurrencyCard {
@@ -45,7 +46,7 @@ function Home() {
     return "message" in error;
   }
 
-  const loadingMessage = isLoading && <p>Loading...</p>;
+  const loadingMessage = isLoading && <Loader />;
   const errorMessage = error && (
     <p>
       Error:{" "}

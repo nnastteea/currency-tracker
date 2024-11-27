@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const colors = {
   background: "#474747",
@@ -35,23 +35,22 @@ const earLift = keyframes`
   }
 `;
 
-export const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: ${colors.background};
-    flex-direction: column;
-    color: ${colors.textColor};
-  }
-
-  * {
-    box-sizing: border-box;
-  }
+export const ErrorContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: ${colors.background};
+  color: ${colors.textColor};
+  box-sizing: border-box;
+  overflow: hidden;
 `;
 
 export const ErrorBear = styled.div`

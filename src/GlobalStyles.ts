@@ -7,6 +7,7 @@ body{
     margin:${NULL_P_M};
     padding:${NULL_P_M};
     font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
     background:${({ theme }) => theme.colors.black};
 }
 #root{

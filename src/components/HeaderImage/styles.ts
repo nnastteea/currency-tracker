@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const HEIGHT = 350;
-const SMALL_SIZE = 250;
-const SMALL_WIDTH = 150;
 const EXTRA_SMALL_WIDTH = 120;
+const SMALL_WIDTH = 150;
+const SMALL_SIZE = 250;
+const HEIGHT = 350;
 
 export const Container = styled.div`
   display: flex;
@@ -25,7 +25,6 @@ export const Container = styled.div`
   }
   @media (max-width: ${({ theme }) => theme.sizes.xl9}px) {
     height: ${SMALL_SIZE}px;
-    gap: ${({ theme }) => theme.sizes.s}px;
   }
 `;
 

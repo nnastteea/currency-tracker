@@ -16,7 +16,7 @@ function Header() {
   };
 
   return (
-    <>
+    <S.WrapperHeader>
       <S.HeaderContainer>
         <S.LogoContainer>
           <img src={Logo} alt="logo" />
@@ -47,13 +47,12 @@ function Header() {
             <S.MenuItem to={routes.CONTACT}>Contact</S.MenuItem>
           </S.NavContainer>
         )}
-
         <div>
           <Switch />
         </div>
       </S.HeaderContainer>
       <ModsenCurrencyTracker />
-    </>
+    </S.WrapperHeader>
   );
 }
 

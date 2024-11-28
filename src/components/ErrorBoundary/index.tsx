@@ -26,9 +26,10 @@ class ErrorBoundary extends React.Component<ErrorProps, ErrorState> {
     if (this.state.hasError) {
       return (
         <>
-          <S.GlobalStyle />
-          <S.ErrorMessage>Something is wrong...</S.ErrorMessage>
-          <S.ErrorBear />
+          <S.ErrorContainer>
+            <S.ErrorMessage>Something is wrong...</S.ErrorMessage>
+            <S.ErrorBear />
+          </S.ErrorContainer>
         </>
       );
     }

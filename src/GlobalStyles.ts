@@ -28,3 +28,11 @@ body{
     border-radius: ${({ theme }) => theme.sizes.xs7}px; 
   }
 `;
+
+export const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: ${({ theme }) => theme.colors.black};
+`;

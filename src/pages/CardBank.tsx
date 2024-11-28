@@ -1,6 +1,5 @@
 import React, { lazy, Suspense } from "react";
 
-// import BankMap from "../components/CurrencyMap";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Loader from "../components/Loader";

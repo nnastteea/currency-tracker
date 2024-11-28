@@ -6,17 +6,19 @@ import store from "./store/store";
 import App from "./App";
 import ThemeProvider from "./ThemeProvider";
 
-const container = document.getElementById("root");
+let container = document.getElementById("root");
 
-if (container) {
-  const root = createRoot(container);
-  root.render(
-    <ThemeProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ThemeProvider>,
-  );
-} else {
-  console.error("Root element not found");
+if (!container) {
+  container = document.createElement("div");
+  container.id = "root";
+  document.body.appendChild(container);
 }
+
+const root = createRoot(container);
+root.render(
+  <ThemeProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ThemeProvider>,
+);

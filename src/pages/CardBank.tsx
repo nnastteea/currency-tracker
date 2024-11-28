@@ -1,8 +1,8 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 
-import BankMap from "../components/CurrencyMap";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Loader from "../components/Loader";
 import SearchCurrency from "../components/SearchCurrency";
 import * as S from "../GlobalStyles";
 
@@ -10,13 +10,18 @@ interface StateCardBank {
   selectedCurrency: string;
 }
 
+const BankMap = lazy(() => import("../components/CurrencyMap"));
+
 class CardBank extends React.Component {
   state: StateCardBank = {
     selectedCurrency: "Commercial Dollar",
   };
 
   handleCurrencySelect = (currency: string) => {
-    this.setState({ selectedCurrency: currency });
+    const { selectedCurrency } = this.state;
+    if (selectedCurrency !== currency) {
+      this.setState({ selectedCurrency: currency });
+    }
   };
 
   render() {
@@ -26,7 +31,9 @@ class CardBank extends React.Component {
         <S.GlobalStyle />
         <Header />
         <SearchCurrency onCurrencySelect={this.handleCurrencySelect} />
-        <BankMap selectedCurrency={selectedCurrency} />
+        <Suspense fallback={<Loader />}>
+          <BankMap selectedCurrency={selectedCurrency} />
+        </Suspense>
         <Footer />
       </>
     );

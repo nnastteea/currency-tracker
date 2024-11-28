@@ -2,7 +2,6 @@ import styled, { keyframes } from "styled-components";
 
 const BORDER_SIZE = 3;
 const MARGIN_TOP = 30;
-const LOADER_MARGIN = 40;
 const LOADER_SIZE = 48;
 const BORDER_RADIUS = 50;
 

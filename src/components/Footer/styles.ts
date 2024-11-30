@@ -7,7 +7,7 @@ const FOOTER_PADDING_MEDIUM = 50;
 const FOOTER_PADDING_LARGE = 80;
 const FOOTER_PADDING_EXTRA_LARGE = 100;
 
-export const FooterContainer = styled.article`
+export const FooterContainer = styled.footer`
   color: ${({ theme }) => theme.colors.white};
   display: flex;
   padding: ${FOOTER_VERTICAL_PADDING}px ${FOOTER_PADDING_EXTRA_LARGE}px;

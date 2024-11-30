@@ -9,7 +9,7 @@ function BlockWithCards({ titleSection, cards, isQuote }: SectionProps) {
     <S.BlockWithCardsContainer>
       <S.SectionTitle>{titleSection}</S.SectionTitle>
       <S.Line />
-      <S.BlockContainer>
+      <S.BlockContainer className="block-with-cards">
         {cards.map(({ id, title, value, image, abbreviation }) => (
           <Card
             key={id}

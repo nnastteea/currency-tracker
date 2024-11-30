@@ -33,7 +33,6 @@ function Home() {
   const processedQuotes = defaultQuotes.map((quote) => {
     const quoteData = quotes[quote.abbreviation];
     const value = quoteData ? quoteData.value.toFixed(5) : "loading...";
-
     return {
       ...quote,
       value: value !== "loading..." ? `R$ ${value}` : value,

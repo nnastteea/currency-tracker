@@ -74,7 +74,7 @@ const Modal = ({ currencyData }: ModalProps) => {
 
   return (
     <S.ModalOverlay>
-      <S.ModalContainer>
+      <S.ModalContainer className="modal-overlay">
         <S.CloseButton onClick={handleClose}>✖</S.CloseButton>
         <S.Title>{currencyData.title}</S.Title>
         <S.Content>

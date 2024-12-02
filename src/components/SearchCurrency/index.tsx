@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactComponent as Search } from "@assets/Search.svg";
-import { quotes } from "@constants/Constants";
+import { filterCurrencies } from "@helpers/filterCurrencies";
 
 import * as S from "./styles";
 
@@ -27,20 +27,7 @@ class SearchCurrency extends React.Component<
     this.setState({ query: inputValue });
 
     if (inputValue.length > 0) {
-      const filteredCurrencies = quotes
-        .filter((quote) => {
-          const title = quote.title.toLowerCase();
-          const words = title.split(" ");
-
-          if (words.length >= 2) {
-            return (
-              words[1].startsWith(inputValue.toLowerCase()) ||
-              title.startsWith(inputValue.toLowerCase())
-            );
-          }
-          return title.startsWith(inputValue.toLowerCase());
-        })
-        .map((quote) => quote.title);
+      const filteredCurrencies = filterCurrencies(inputValue);
 
       this.setState({ filteredCurrencies });
     } else {

@@ -3,16 +3,14 @@ import Map, { Marker, Popup } from "react-map-gl";
 import { connect } from "react-redux";
 import Phone from "@assets/Phone.svg";
 import Place from "@assets/Place.svg";
-import { banks } from "@constants/Constants";
+import { banks, VITEBSK_COORDS } from "@constants/Constants";
+import { getCityCoordinates } from "@helpers/getCityCoordinates";
 import { fetchlocation } from "@store/locationSlice";
 
 import { Bank, BankMapProps, BankMapState, RootState } from "./interfaces";
 import * as S from "./styles";
 
 import "mapbox-gl/dist/mapbox-gl.css";
-
-const VITEBSK_COORDS = { longitude: 30.2099, latitude: 55.1931, zoom: 12 };
-const MINSK_COORDS = { longitude: 27.5615, latitude: 53.9023, zoom: 11 };
 
 class BankMap extends React.Component<BankMapProps, BankMapState> {
   constructor(props: BankMapProps) {
@@ -57,10 +55,12 @@ class BankMap extends React.Component<BankMapProps, BankMapState> {
 
   componentDidUpdate(prevProps: BankMapProps) {
     if (prevProps.userCity !== this.props.userCity) {
-      if (this.props.userCity === "Minsk") {
-        this.setState({ viewState: MINSK_COORDS });
-      } else if (this.props.userCity === "Витебск") {
-        this.setState({ viewState: VITEBSK_COORDS });
+      const { userCity } = this.props;
+      if (userCity) {
+        const cityCoordinates = getCityCoordinates(userCity);
+        if (cityCoordinates) {
+          this.setState({ viewState: cityCoordinates });
+        }
       }
     }
   }

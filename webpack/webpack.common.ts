@@ -1,4 +1,5 @@
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import Dotenv from "dotenv-webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import { Configuration } from "webpack";
@@ -11,6 +12,16 @@ const config: Configuration = {
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
+    alias: {
+      "@assets": path.resolve("./src/assets"),
+      "@constants": path.resolve("./src/constants"),
+      "@store": path.resolve("./src/store"),
+      "@observer": path.resolve("./src/observer"),
+      "@helpers": path.resolve("./src/helpers"),
+      "@routes": path.resolve("./src/routes"),
+      "@themes": path.resolve("./src/themes"),
+      "@hooks": path.resolve("./src/hooks"),
+    },
   },
   module: {
     rules: [
@@ -62,6 +73,7 @@ const config: Configuration = {
       template: "./src/index.html",
     }),
     new CleanWebpackPlugin(),
+    new Dotenv(),
   ],
 };
 

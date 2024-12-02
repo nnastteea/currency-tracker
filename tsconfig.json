@@ -12,8 +12,18 @@
     "rootDir": "./src", // Корневая директория исходных файлов
     "resolveJsonModule": true, // Позволяет импортировать файлы JSON
     "isolatedModules": true,
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "@assets/*": ["assets/*"],
+      "@constants/*": ["constants/*"],
+      "@store/*": ["store/*"],
+      "@observer/*": ["observer/*"],
+      "@helpers/*": ["helpers/*"],
+      "@routes/*": ["routes/*"],
+      "@themes/*": ["themes/*"],
+      "@hooks/*": ["hooks/*"]
+    }
   },
-  "include": ["src/**/*"], // Включает все файлы в директории src и ее поддиректориях
-  "exclude": ["node_modules"] // Исключает файлы в node_modules и файлы тестов
+  "include": ["src/**/*", "src/@types/declarations.d.ts"], // Включает все файлы в директории src и ее поддиректориях
+  "exclude": ["node_modules", "**/*.spec.ts"] // Исключает файлы в node_modules и файлы тестов
 }
